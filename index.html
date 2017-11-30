@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>From Wells to Cells</title>
+  <meta charset="utf-8">
+  <meta name="description" content="From Wells to Cells">
+  <meta name="author" content="Rainer Machne">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>From Wells to Cells</h1>
+    <h2>Growth vs. Gene Expression in Platereader Experiments</h2>
+    <p>Rainer Machne<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="centertext" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+em {
+  font-style: italic
+}
+</style>
+
+<style>
+oq {
+    background-color:yellow;
+    color:#CC2904;
+    font-weight: bold;
+}
+</style>
+
+<h2>Plan</h2>
+
+<table><thead>
+<tr>
+<th>#</th>
+<th>Experiment</th>
+<th>Theory</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Using R packages: <code>platexpress</code>, <code>grofit</code>, etc.</td>
+<td>The Basics: What is Exponential Growth?</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The Experiment: View and Analyze Data</td>
+<td>Statistics: Measurement Errors</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The Result: Summary Plots</td>
+<td>The Model: Growth vs. Expression Rates</td>
+</tr>
+</tbody></table>
+
+<p><br/></p>
+
+<p><img src="assets/img/ecoli_20141014.png" height="250"><img src="assets/img/fritz_the_platypus.gif" height="230"><img src="assets/img/Ecoli_20161014_OD_grofit_A8.png" height="250">
+<a href="https://github.com/raim/platexpress">https://github.com/raim/platexpress</a> </p>
+
+<p><oq>Goals: learn some R for data analysis - handling large data sets, &amp;<br/> 
+gain better quantitative understanding of cell growth <em>VS.</em> gene regulation.</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    
+<div style='float:left;width:35%;'>
+  <p><img src="assets/img/ecoli_20141014.png" height="190">
+<img src="assets/img/Ecoli_20161014_OD_grofit_A8.png" height="190">
+<img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="190"></p>
+
+</div>
+<div style='float:right;width:60%;'>
+  <ol>
+<li>Use R to Analyze Growth &amp; Expression Data
+
+<ul>
+<li>Installing R packages</li>
+<li>Prepare &amp; load data</li>
+</ul></li>
+<li>Use R <code>base</code> 
+
+<ul>
+<li>Linear regression with <code>lm(log(X) ~ time)</code></li>
+<li>Non-linear fit with <code>nls(X ~ X0*exp(mu*time))</code></li>
+</ul></li>
+<li>Use R packages 
+
+<ul>
+<li><code>grofit</code>, <code>growthcurver</code> or <code>growthrate</code></li>
+<li>Logistic, Gompertz, non-parametric growth models</li>
+</ul></li>
+<li>Growth vs. Gene Expression
+
+<ul>
+<li><oq>Proteins/Cell: normalize fluorescence &amp; compare</oq></li>
+<li>Monod equation: growth vs. gene expression</li>
+<li><oq>Towards the riboswitch model</oq></li>
+</ul></li>
+</ol>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>From Data Hell to Model Heaven : Why Platereader?</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Tube vs. Platereader Cultures</h3>
+
+<ol>
+<li>Data Analysis
+
+<ul>
+<li>many replicates, many conditions</li>
+<li>different statistics required</li>
+</ul></li>
+<li>Endpoint vs. Kinetics
+
+<ul>
+<li>steady-state vs. dynamics</li>
+</ul></li>
+</ol>
+
+<p><oq>Are tube and platereader cultures comparable?</oq><br/>
+<oq>Why (not)?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>From Data Hell to Model Heaven and back.</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Inspect Data Files
+
+<ul>
+<li>Amend if required</li>
+</ul></li>
+<li>Load &amp; Inspect Data
+
+<ul>
+<li>Get overview, check data: roughly Ok?</li>
+<li>Clean data: subtract blanks, cut time, rm outliers etc.</li>
+<li>Inspect replicates: are observations replicated, 
+what are our measurement errors?</li>
+</ul></li>
+<li>Construct Your Analysis Pipeline
+
+<ul>
+<li>What do we need?</li>
+<li>What were our assumptions, and are they justified?</li>
+<li>Do we see additional unsuspected results?</li>
+</ul></li>
+<li>Calculate Results &amp; Statistics over Replicates</li>
+</ol>
+
+<p><oq> Do we have what we need for Monday?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h3>Installing R Packages from <code>cran</code>, <code>bioconductor</code> &amp; <code>github</code></h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">install.packages(c(&quot;grofit&quot;,&quot;growthcurver&quot;)) # at CRAN
+
+source(&quot;https://bioconductor.org/biocLite.R&quot;) # at bioconductor
+biocLite(&quot;cellGrowth&quot;)
+
+install.packages(&quot;devtools&quot;) # R development tools
+library(devtools)
+install_github(&quot;raim/platexpress&quot;) # at github
+</code></pre>
+
+<p><img src="assets/img/fritz_the_platypus.gif" height="130">
+<a href="https://github.com/raim/platexpress">https://github.com/raim/platexpress</a> </p>
+
+<p><oq>Do you speak <code>git</code>? Try to install from your local copy:</oq><br/>
+<code>git clone git@github.com:raim/platexpress.git</code><br/>
+... and use <code>R CMD build</code> &amp; <code>sudo R CMD INSTALL</code></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="centertext" id="slide-6" style="background:;">
+  <hgroup>
+    <h3>How to use a new R package?</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">## load the package &amp; explore
+library(platexpress)
+
+?platexpress # VIEW HELP FILES
+vignette(&quot;platexpress&quot;) # READ THE VIGNETTE
+demo(&quot;demo_ap12&quot;) # RUN THE DEMO
+getData # SEE WHAT A FUNCTION DOES: just type without brackets
+
+## APPLY TO YOUR DATA:
+setwd(&quot;~/work/hhu_2015/uebung_201612/cellgrowth_20161214/praktikum_201612/test2/&quot;)
+plate &lt;- readPlateMap(&quot;161130_Praktikum_RAJ11_Test_2_layout.csv&quot;)
+files &lt;- c(&quot;161130_Praktikum_RAJ11_Test_2.csv&quot;)
+raw &lt;- readPlateData(files, type=&quot;Synergy&quot;,skip=44,sep=&quot;;&quot;,
+                     time.format=&quot;%H:%M:%S&quot;,time.conversion=1/3600)
+viewPlate(raw)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h3>Why Growth Rates?</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:35%;'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<ul>
+<li>Injection of IPTG into one column (7 wells + 1 blank) every
+100 minutes.</li>
+<li>Slower response with later injections.</li>
+</ul>
+
+</div>
+<div style='float:right;width:60%;'>
+  <p><img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="250"></p>
+
+<p>\( \Rightarrow \) Faster growth rate \(\mu\) with later or no induction.</p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h3>Why Growth Rates?</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:35%;'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<ul>
+<li>Injection of IPTG into one column (7 wells + 1 blank) every
+100 minutes.</li>
+<li>Slower response with later injections.</li>
+</ul>
+
+</div>
+<div style='float:right;width:60%;'>
+  <p><img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="250"></p>
+
+<p>\( \Rightarrow \) Faster growth rate \(\mu\) with later or no induction.</p>
+
+<p><oq>\(\mu = k \frac{\text{ribosomes}}{\text{proteins}}\)</oq></p>
+
+<p><div  style='text-align: left;line-height: 90%;'><font size=3> 
+Schaechter, Maaloe &amp; Kjeldgaard, J Gen Microbiol <b> 1958</b>: <em>Dependency on medium and temperature of cell size and chemical composition during <oq>balanced growth</oq> of <em>Salmonella typhimurium</em>.</em><br/>
+<b>Koch, Can J Microbiol 1988: <em>Why can&#39;t a cell grow infinitely fast?</em></b></br>
+Neidhardt, J Bacteriol 1999: <em>Bacterial growth: constant obsession with dN/dt.</em>
+</font></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h3>Why Growth Rates?</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:35%;'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<p><img src="assets/img/scott14_fig1b.png" height="220"></p>
+
+</div>
+<div style='float:right;width:60%;'>
+  <p><img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="250"><oq>\(\mu = k \frac{\text{ribosomes}}{\text{proteins}}\)</oq></p>
+
+<div  style='text-align: left;line-height: 90%;'><font size=3> 
+Brauer <em>et al.</em>, Mol Biol Cell 2008: <em>Coordination of growth rate, cell cycle, stress response, and metabolic activity in yeast.</em><br/>
+Slavov <em>et al.</em>, Mol Biol Cell 2011: <em>Coupling among growth rate response, metabolic cycle, and cell division cycle in yeast.</em><br/>
+Scott <em>et al.</em>, Science 2010: <em>Interdependence of cell growth and gene expression: origins and consequences.</em></br>
+Wei&szlig;e <em>et al.</em>, PNAS 2015: <em>Mechanistic links between cellular trade-offs, gene expression, and growth.</em>
+</font></div>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <article data-timings="">
+    
+<div style='float:left;width:35%;'>
+  <p><img src="assets/img/scott14_fig1b.png" height="220"></p>
+
+<p><img src="assets/img/scott14_fig4.png" height="220"></p>
+
+<p>Scott <em>et al.</em>, Mol Syst Biol 2014: <em>Emergence of robust growth laws from optimal regulation of ribosome synthesis.</em></p>
+
+</div>
+<div style='float:right;width:60%;'>
+  <p><img src="assets/img/cluster_vs_rates_major.png" height="200"><br/>
+<oq>Expression of large gene groups correlates with \(\mu\).</oq></p>
+
+<p><img src="assets/img/slavov14_selected_transcripts.png" height="200"><br/>
+<oq>Even at constant \(\mu\) cells are not 
+in steady-state!</oq></p>
+
+<p>Slavov <em>et al.</em>, Cell Rep 2014: <em>Constant growth rate can be supported by decreasing energy flux and increasing aerobic glycolysis.</em><br/></p>
+
+<p>The concept of &quot;balanced growth&quot; is flawed, yet a central assumption
+of many quantitative models.</p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h3>Cited at Wikipedia:</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/img/expogrowth_wiki_slavovcit.png" width="900"></p>
+
+<p class=''>. . that&#39;s how important it is (or perhaps it was his dad :p ).</br></p>
+
+<p>[1] Slavov <em>et al.</em>, Cell Rep 2014: <em>Constant growth rate can be supported by<br/>decreasing energy flux and increasing aerobic glycolysis.</em><br/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h3>DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/img/fulcrand16_fig4ab.png" height="310"></p>
+
+<p>Interested in a bachelor/master project? </p>
+
+<ul>
+<li>Working on <code>platexpress</code> and/or quantitative models of growth vs. gene expression.</li>
+<li>At the interface of three projects: Ribonets, Coil-seq &amp; Yeast Oscillations.</li>
+</ul>
+
+<p>Fulcrand <em>et al.</em>, Sci Rep 2016: <em>DNA supercoiling, a critical signal<br/>regulating the basal expression of the lac operon in Escherichia coli.</em></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h3>DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/img/kai_20161207.png" height="310"> \(\Leftarrow \) &copy; Kai, today</p>
+
+<p>Interested in a bachelor/master project? </p>
+
+<ul>
+<li>Working on <code>platexpress</code> and/or quantitative models of growth vs. gene expression.</li>
+<li>At the interface of three projects: Ribonets, Coil-seq &amp; Yeast Oscillations.</li>
+</ul>
+
+<p>Fulcrand <em>et al.</em>, Sci Rep 2016: <em>DNA supercoiling, a critical signal<br/>regulating the basal expression of the lac operon in Escherichia coli.</em></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-14" style="background:;">
+  <hgroup>
+    <h3>Growth &amp; Gene Expression in <em>E. coli</em> : exponential growth</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<p>\[ 
+\begin{equation*} \begin{aligned}  
+\frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
+X(t) =& X(0)   e^{\mu  t}\\ 
+\end{aligned} \end{equation*} \]</p>
+
+<p><oq>Can you derive the formula<br/>for exponential growth?</oq></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code class="r">time &lt;- seq(0,10,0.1) # hours
+mu &lt;- 0.3 # specific growth rate, hour^-1
+x0 &lt;- 0.01 # the inoculum: cell density, cells liter^-1
+xt &lt;- x0 * exp(mu*time)
+par(mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+plot(time, xt,
+     xlab=&quot;time, h&quot;,ylab=expression(X[0]*e^(mu*t)))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-15" style="background:;">
+  <hgroup>
+    <h3>Growth &amp; Gene Expression in <em>E. coli</em> : growth rate</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<p>\[ 
+\begin{equation*} \begin{aligned}  
+\frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
+X(t) =& X(0)   e^{\mu  t}\\ 
+\ln \frac{X(t)}{X(0)} =& \mu t
+\end{aligned} \end{equation*} \]</p>
+
+<p><oq>Which important parameter <br/>can we calculate from here?</oq></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code class="r">time &lt;- seq(0,10,0.1) # hours
+mu &lt;- 0.3 # specific growth rate, hour^-1
+x0 &lt;- 0.01 # the inoculum: cell density, cells liter^-1
+xt &lt;- x0 * exp(mu*time)
+par(mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+plot(time, log(xt/x0),
+     xlab=&quot;time, h&quot;,ylab=expression(ln(X(t)/X[0])))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-16" style="background:;">
+  <hgroup>
+    <h3>Growth &amp; Gene Expression in <em>E. coli</em> : doubling time</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<p>\[ 
+\begin{equation*} \begin{aligned}  
+\frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
+X(t) =& X(0)   e^{\mu  t}\\ 
+\frac{\ln 2}{\mu} = & t_D
+\end{aligned} \end{equation*} \]</p>
+
+<p><oq>\(t_D\) is the average CULTURE doubling time.<br/>
+In which cases is it also the average CELL doubling time?</oq></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code class="r">time &lt;- seq(0,10,0.1) # hours
+mu &lt;- 0.3 # specific growth rate, hour^-1
+x0 &lt;- 0.01 # the inoculum: cell density, cells liter^-1
+xt &lt;- x0 * exp(mu*time)
+par(mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+plot(time, log(xt/x0),
+     xlab=&quot;time, h&quot;,ylab=expression(ln(X(t)/X[0])))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-17" style="background:;">
+  <hgroup>
+    <h3>Growth &amp; Gene Expression in <em>E. coli</em> : growth rate</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:35%;'>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
+
+<p>\[ 
+\begin{equation*} \begin{aligned}  
+\frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
+X(t) =& X(0)   e^{\mu  t}\\ 
+\ln(X(t)) =& \mu t + \ln(X(0))
+\end{aligned} \end{equation*} \]</p>
+
+</div>
+<div style='float:right;width:60%;'>
+  <pre><code class="r">par(mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+plot(time, log(xt), xlab=&quot;time, h&quot;,ylab=expression(ln~X(t)))
+x1 &lt;- .05; idx1 &lt;- which(abs(xt-x1)==min(abs(xt-x1)))
+x2 &lt;- .1; idx2 &lt;- which(abs(xt-x2)==min(abs(xt-x2)))
+lines(x=time[c(idx1,idx2)], y=log(xt[c(idx1,idx1)]),col=2,lwd=5)
+text(time[idx2],mean(log(xt[c(idx1,idx2)])),expression(Delta~X),pos=4,col=2)
+lines(x=time[c(idx2,idx2)], y=log(xt[c(idx1,idx2)]),col=2,lwd=5)
+text(mean(time[c(idx1,idx2)]),log(xt[idx1]),expression(Delta~t),pos=1,col=2)
+arrows(x0=0,x1=0,y0=log(xt[1]),y1=-1.4,col=2,lwd=5);
+text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-18" style="background:;">
+  <hgroup>
+    <h3>Load Your Data</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(platexpress)
+
+dpath &lt;- &quot;~/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014&quot;
+
+plate &lt;-readPlateMap(file.path(dpath,&quot;20161014_platemap.csv&quot;), fsep=&quot;;&quot;,
+                     fields=c(&quot;strain&quot;,&quot;IPTG&quot;,&quot;blank&quot;))
+</code></pre>
+
+<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;/home/
+## raim/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/
+## ecoli_ts_20161014/20161014_platemap.csv&#39;: No such file or directory
+</code></pre>
+
+<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection
+</code></pre>
+
+<pre><code class="r">files &lt;- c(&quot;20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV&quot;,
+           &quot;20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV&quot;)
+raw &lt;- readPlateData(file.path(dpath,files), type=&quot;BMG&quot;, time.conversion=1/60)
+</code></pre>
+
+<pre><code>## Parsing file ~/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV
+</code></pre>
+
+<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;/home/raim/work/hhu_2015/
+## uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014
+## IPTG mVenus Injection 1_Absorbance.CSV&#39;: No such file or directory
+</code></pre>
+
+<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection
+</code></pre>
+
+<p><oq> What does the <code>warning</code> mean?<oq/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">showSpectrum() # try: findWavelength(3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8"></p>
+
+<pre><code class="r">## re-name and color data
+raw &lt;- prettyData(raw, dids=c(OD=&quot;584&quot;,mVenus=&quot;485/Em520&quot;),
+                  colors=c(&quot;#000000&quot;,wavelength2RGB(600)))
+</code></pre>
+
+<pre><code>## Error in data$mids: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">vp &lt;- viewPlate(raw,xlim=c(0,1800),xscale=TRUE)
+</code></pre>
+
+<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h3>Linear and Non-linear Regression: analyzing a single data set</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">## GET A SINGLE DATASET
+od &lt;- getData(raw,&quot;OD&quot;) # what is `od` ?
+</code></pre>
+
+<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">TIME &lt;- raw$Time        # what does the $ do?
+</code></pre>
+
+<pre><code>## Error in raw$Time: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">Xt &lt;- od[,&quot;A8&quot;]
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;od&#39; not found
+</code></pre>
+
+<pre><code class="r">plot(TIME, Xt)
+</code></pre>
+
+<pre><code>## Error in plot(TIME, Xt): object &#39;TIME&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## cut to growth range
+rng &lt;- TIME&lt;1500   # what is `rng` ?
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">Xt &lt;- Xt[rng]
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;Xt&#39; not found
+</code></pre>
+
+<pre><code class="r">TIME &lt;- TIME[rng]
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">## look at data
+par(mfcol=c(1,2), mai=c(.75,.75,.1,.1), mgp=c(1.5,.5,0), cex=1.2)
+plot(TIME, Xt)
+</code></pre>
+
+<pre><code>## Error in plot(TIME, Xt): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">plot(TIME, log(Xt)) # log it - default `log` in R is the natural logarithm, ln
+</code></pre>
+
+<pre><code>## Error in plot(TIME, log(Xt)): object &#39;TIME&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## cut to linear range of growth
+rng &lt;- TIME&gt;600 &amp; TIME &lt; 900
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">xt &lt;- Xt[rng]
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;Xt&#39; not found
+</code></pre>
+
+<pre><code class="r">time &lt;- TIME[rng]
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">## look again at data
+par(mfcol=c(1,2))
+plot(time, xt)
+plot(time, log(xt))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-24" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## DO LINEAR REGRESSION
+## ln(X(t)) = mu * t + ln(X(0))
+lfit &lt;- lm(log(xt) ~ time) # what is `~` ?
+
+## check quality of fit
+summary(lfit)
+</code></pre>
+
+<pre><code>## Warning in summary.lm(lfit): essentially perfect fit: summary may be
+## unreliable
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = log(xt) ~ time)
+## 
+## Residuals:
+##        Min         1Q     Median         3Q        Max 
+## -1.207e-14 -1.196e-16  1.336e-16  3.636e-16  1.065e-15 
+## 
+## Coefficients:
+##               Estimate Std. Error    t value Pr(&gt;|t|)    
+## (Intercept) -4.605e+00  2.679e-16 -1.719e+16   &lt;2e-16 ***
+## time         3.000e-01  4.628e-17  6.482e+15   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.356e-15 on 99 degrees of freedom
+## Multiple R-squared:      1,  Adjusted R-squared:      1 
+## F-statistic: 4.202e+31 on 1 and 99 DF,  p-value: &lt; 2.2e-16
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## get parameters from linear regression
+x0.1 &lt;- exp(coefficients(lfit)[1]) # e^ln(X(0)) = ?
+mu.1 &lt;- coefficients(lfit)[2] # mu
+
+## plot
+par(mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+plot(TIME,log(Xt))
+</code></pre>
+
+<pre><code>## Error in plot(TIME, log(Xt)): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">lines(TIME, mu.1*TIME + log(x0.1), col=&quot;red&quot;)
+</code></pre>
+
+<pre><code>## Error in lines(TIME, mu.1 * TIME + log(x0.1), col = &quot;red&quot;): object &#39;TIME&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-26" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## DO NON-LINEAR REGRESSION, using
+## the results of the linear fit as initial parameter guesses
+dat &lt;- data.frame(time=time, xt=xt)
+start &lt;- list(mu=mu.1,x0=x0.1)
+nlfit &lt;- nls(xt ~ x0*exp(mu*time),data=dat,start=start) # TRY MORE COMPLEX MODELS, see a few slides ahead
+</code></pre>
+
+<pre><code>## Error in nls(xt ~ x0 * exp(mu * time), data = dat, start = start): number of iterations exceeded maximum of 50
+</code></pre>
+
+<pre><code class="r">## check quality of fit
+summary(nlfit)
+</code></pre>
+
+<pre><code>## Error in summary(nlfit): object &#39;nlfit&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-27" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## get parameters &amp; plot results
+mu.2 &lt;- coefficients(nlfit)[1]
+</code></pre>
+
+<pre><code>## Error in coefficients(nlfit): object &#39;nlfit&#39; not found
+</code></pre>
+
+<pre><code class="r">x0.2 &lt;- coefficients(nlfit)[2]
+</code></pre>
+
+<pre><code>## Error in coefficients(nlfit): object &#39;nlfit&#39; not found
+</code></pre>
+
+<pre><code class="r">par(mfcol=c(1,2),mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+plot(TIME,Xt,ylim=c(0.2,.4))
+</code></pre>
+
+<pre><code>## Error in plot(TIME, Xt, ylim = c(0.2, 0.4)): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">lines(TIME, x0.2 * exp(TIME*mu.2),col=&quot;green&quot;, lty=2,lwd=5)
+</code></pre>
+
+<pre><code>## Error in lines(TIME, x0.2 * exp(TIME * mu.2), col = &quot;green&quot;, lty = 2, : object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">lines(TIME, x0.1 * exp(TIME*mu.1),col=&quot;red&quot;,lwd=2)
+</code></pre>
+
+<pre><code>## Error in lines(TIME, x0.1 * exp(TIME * mu.1), col = &quot;red&quot;, lwd = 2): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">legend(&quot;bottomright&quot;,legend=c(&quot;data&quot;,&quot;lin.reg.&quot;,&quot;non-lin.&quot;),
+       col=c(1,2,3),pch=c(1,NA,NA),lty=c(NA,1,2),lwd=3)
+</code></pre>
+
+<pre><code>## Error in strwidth(legend, units = &quot;user&quot;, cex = cex, font = text.font): plot.new has not been called yet
+</code></pre>
+
+<pre><code class="r">plot(TIME, x0.2 * exp(TIME*mu.2),col=&quot;green&quot;, lty=2,lwd=5)
+</code></pre>
+
+<pre><code>## Error in plot(TIME, x0.2 * exp(TIME * mu.2), col = &quot;green&quot;, lty = 2, lwd = 5): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">points(TIME,Xt)
+</code></pre>
+
+<pre><code>## Error in points(TIME, Xt): object &#39;TIME&#39; not found
+</code></pre>
+
+<pre><code class="r">lines(TIME, x0.1 * exp(TIME*mu.1),col=&quot;red&quot;,lwd=2)
+</code></pre>
+
+<pre><code>## Error in lines(TIME, x0.1 * exp(TIME * mu.1), col = &quot;red&quot;, lwd = 2): object &#39;TIME&#39; not found
+</code></pre>
+
+<p><oq>How many linear phases can you detect in your experiments? Why are there several?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h3>Fitting Growth Models</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="assets/img/Ecoli_20161014_OD_grofit_A8.png" height="300"></p>
+
+<ul>
+<li>Initial Cell Density: \(X(0) \)</li>
+<li>Lag Phase: \(\lambda \)</li>
+<li>Exponential Phase: growth rate \(\mu \)</li>
+<li>Stationary Phase: <em>capacity</em> \(A \) </li>
+</ul>
+
+<p><a href="https://cran.r-project.org/package=grofit">https://cran.r-project.org/package=grofit</a></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li>Logistic Equation:<br/>
+\(X(t) = \frac{A}{1+e^{\frac{4 \mu}{A}(\lambda - t)+2}} \)</li>
+<li>Gompertz:<br/>
+\(X(t) = A e^{-e^{\frac{\mu e}{A}(\lambda -t)+1}} \)</li>
+<li>Modified Gompertz:<br/>
+\(X(t) = A e^{-e^{\frac{\mu e}{A}(\lambda -t)+1}} + A e^{\alpha(t-t_{shift})} \)</li>
+<li>Richard&#39;s generalized logistic model:<br/> \(  X(t) = A (1 + \nu e^{1+ \nu + \frac{\mu}{A}(1+\nu )^{1+\frac{1}{\nu}}(\lambda -t)})^{-\frac{1}{\nu}} \)</li>
+</ul>
+
+<p>as implemented in R package <code>grofit</code></p>
+
+<p><oq> Try these equations with <code>nls</code>.<oq/><br/>
+<oq> Do we need packages if <code>nls</code> works well?<oq/></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h3>Prepare Data: blanks, cuts, etc.</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">raw2 &lt;- cutData(raw, rng=c(0,1550), mid=&quot;Time&quot;)
+</code></pre>
+
+<pre><code>## Error in data[[mid]]: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">raw3 &lt;- correctBlanks(raw2, plate,dids=&quot;OD&quot;,max.mid=1500) 
+</code></pre>
+
+<pre><code>## Error in correctBlanks(raw2, plate, dids = &quot;OD&quot;, max.mid = 1500): object &#39;raw2&#39; not found
+</code></pre>
+
+<pre><code class="r">raw4 &lt;- correctBlanks(raw3,plate,dids=&quot;mVenus&quot;,by=c(&quot;strain&quot;,&quot;IPTG&quot;),
+                      mbins=length(raw$Time)/5,verb=FALSE)
+</code></pre>
+
+<pre><code>## Error in correctBlanks(raw3, plate, dids = &quot;mVenus&quot;, by = c(&quot;strain&quot;, : object &#39;raw3&#39; not found
+</code></pre>
+
+<pre><code class="r">data &lt;- adjustBase(raw4, base=0, add.fraction=.001, 
+                   wells=unlist(groups),xlim=c(1,which(raw$Time&gt;1500)[1]),
+                   each=TRUE, verb=FALSE) # set verb to TRUE
+</code></pre>
+
+<pre><code>## Error in adjustBase(raw4, base = 0, add.fraction = 0.001, wells = unlist(groups), : unused argument (wells = unlist(groups))
+</code></pre>
+
+<p><oq> What happens in <code>correctBlanks</code> and <code>cutData</code>? <br/>
+What does <code>adjustBase</code> do, and when could we need it?<p/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h3>Get Replicate Groups</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">groups &lt;- getGroups(plate, c(&quot;strain&quot;), verb=FALSE) # SET TO TRUE!
+</code></pre>
+
+<pre><code>## Error in lapply(plate, function(x) as.character(x)): object &#39;plate&#39; not found
+</code></pre>
+
+<pre><code class="r">groups2 &lt;- getGroups(plate, c(&quot;strain&quot;,&quot;IPTG&quot;), verb=FALSE) 
+</code></pre>
+
+<pre><code>## Error in lapply(plate, function(x) as.character(x)): object &#39;plate&#39; not found
+</code></pre>
+
+<pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, verb=FALSE)
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<p><oq> What are the lines and areas?<br/>
+What is the structure of the <code>groups</code> item? 
+Can you make your own groupings?<br/>
+Try different groupings and parameters to <code>viewGroups</code>.</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h3>Use Package <code>grofit</code> to Fit Growth Data</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">raw2 &lt;- cutData(raw,rng=c(200,1500))
+</code></pre>
+
+<pre><code>## Error in data$mids: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">grodat &lt;- data2grofit(raw2, did=&quot;OD&quot;, plate=plate, 
+                      wells=groups[[&quot;pUC18mV&quot;]])
+</code></pre>
+
+<pre><code>## Error in data2grofit(raw2, did = &quot;OD&quot;, plate = plate, wells = groups[[&quot;pUC18mV&quot;]]): object &#39;raw2&#39; not found
+</code></pre>
+
+<pre><code class="r">library(grofit)
+fitparams &lt;- grofit.2.control(interactive=FALSE, plot=TRUE) # SET ALL TO TRUE!!
+pdf(&quot;growthrates.pdf&quot;)
+fits &lt;- gcFit.2(time=grodat$time, data=grodat$data, control=fitparams)
+</code></pre>
+
+<pre><code>## Error in gcFit.2(time = grodat$time, data = grodat$data, control = fitparams): object &#39;grodat&#39; not found
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## png 
+##   2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h3>Use Package <code>grofit</code> to Fit Growth Data</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">table &lt;- grofitGetParameters(fits, p=c(&quot;AddId&quot;,&quot;mu.spline&quot;))
+</code></pre>
+
+<pre><code>## Error in grofitGetParameters(fits, p = c(&quot;AddId&quot;, &quot;mu.spline&quot;)): object &#39;fits&#39; not found
+</code></pre>
+
+<pre><code class="r">boxplot(table[,&quot;mu.spline&quot;] ~ table[,&quot;AddId&quot;], las=2, ylim=c(1.9e-4,5e-4))
+</code></pre>
+
+<pre><code>## Error in table[, &quot;mu.spline&quot;]: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<p><oq> 
+Try different well groups instead of <code>table[,&quot;AddId&quot;]</code>.<br/>
+Are the fits Ok? How to get more information on the fits?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <h3>Gene Expression</h3>
+
+<ul>
+<li>Measured: total fluorescence per well</li>
+<li>Wanted: protein level per cell!</li>
+</ul>
+
+<p>Assumptions:</p>
+
+<ol>
+<li>Fluorescence is linear with protein level</li>
+<li>OD is linear with cell number</li>
+</ol>
+
+<p><oq>\( \Rightarrow \) Fluor./OD  &Tilde; proteins/cell</oq></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p><img src="assets/img/ecoli_20141014.png" height="190">
+<img src="assets/img/Ecoli_20161014_OD_grofit_A8.png" height="190">
+<img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="190"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Normalized Fluorescence - FL/OD</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, xid=&quot;OD&quot;, lwd.orig=.5, verb=FALSE)
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Normalized Fluorescence  - FL/OD</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">fl &lt;- getData(data,&quot;mVenus&quot;)
+</code></pre>
+
+<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">od &lt;- getData(data,&quot;OD&quot;)
+</code></pre>
+
+<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">data &lt;- addData(data, ID=&quot;mV/OD&quot;, dat=fl/od, col=&quot;#0095FF&quot;)
+</code></pre>
+
+<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, 
+           dids=c(&quot;OD&quot;,&quot;mV/OD&quot;),ylims=list(&quot;mV/OD&quot;=c(0,1e4)),emphasize.mean=T,verb=F)
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Normalized Fluorescence - FL/OD</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, dids=&quot;mV/OD&quot;, xid=&quot;OD&quot;, lwd.orig=.5, 
+           ylim=c(0,1e4), g2.legend=FALSE, verb=FALSE)
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<p><oq>What could the slope \(\frac{mV}{OD} \sim OD \) (where it&#39;s linear) 
+mean?<br/>Can we use it?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-37" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Normalized Fluorescence - Interpolate to OD</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">od.data &lt;- interpolatePlateData(data,&quot;OD&quot;)
+</code></pre>
+
+<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">viewGroups(od.data, groups=groups[2], groups2=groups2,xlim=c(.01,.15),
+           ylims=list(&quot;mV/OD&quot;=c(0,1e4)),dids=&quot;mV/OD&quot;, show.ci=F,lwd.orig=0, verb=F)
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<p><oq>Can we smooth upstream data to get rid of the noise?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: The Fold Change</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">flod &lt;- getData(od.data,&quot;mV/OD&quot;)
+</code></pre>
+
+<pre><code>## Error in getData(od.data, &quot;mV/OD&quot;): object &#39;od.data&#39; not found
+</code></pre>
+
+<pre><code class="r">uninduced &lt;- rowMeans(flod[, groups2[[&quot;pUC18mV_Inj:NA&quot;]]],na.rm=TRUE)
+</code></pre>
+
+<pre><code>## Error in is.data.frame(x): object &#39;flod&#39; not found
+</code></pre>
+
+<pre><code class="r">od.data &lt;- addData(od.data, ID=&quot;mV/OD/uninduced&quot;, dat=flod/uninduced, col=&quot;#AAAA00&quot;)
+</code></pre>
+
+<pre><code>## Error in match(x, table, nomatch = 0L): object &#39;od.data&#39; not found
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-39" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Data Normalization</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code>## Error in is.data.frame(x): object &#39;flod&#39; not found
+</code></pre>
+
+<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+</code></pre>
+
+<p><oq>What&#39;s wrong with <code>mV/OD/uninduced</code> vs. <code>time</code> w/o interpolation?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-40" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Data Normalization - Result</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">results &lt;- boxData(od.data, did=&quot;mV/OD/uninduced&quot;, rng=.08, groups=groups2, type=&quot;bar&quot;)
+</code></pre>
+
+<pre><code>## Error in boxData(od.data, did = &quot;mV/OD/uninduced&quot;, rng = 0.08, groups = groups2, : object &#39;od.data&#39; not found
+</code></pre>
+
+<p>Extracts values in given range; plots by groups, and returns
+values for each well. </p>
+
+<p><oq>What are the error bars?<br/>
+See <code>?cutData</code> on how to obtain values in 
+a given range directly.<br/>Or try yourself with base R.</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-41" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Data Normalization - Result</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(platexpress)
+head(results)
+</code></pre>
+
+<pre><code>## Error in head(results): object &#39;results&#39; not found
+</code></pre>
+
+<p><oq>Calculate confidence intervals and error bars yourself.</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-42" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">imgtxt &lt;- matrix(results[,1], nrow=7, ncol=12) # MATRIX THAT LOOKS LIKE PLATE
+</code></pre>
+
+<pre><code>## Error in matrix(results[, 1], nrow = 7, ncol = 12): object &#39;results&#39; not found
+</code></pre>
+
+<pre><code class="r">imgdat &lt;- matrix(results[,3], nrow=7, ncol=12)
+</code></pre>
+
+<pre><code>## Error in matrix(results[, 3], nrow = 7, ncol = 12): object &#39;results&#39; not found
+</code></pre>
+
+<pre><code class="r">tmp &lt;- t(apply(imgdat, 2, rev)) # WHAT HAPPENS HERE?
+</code></pre>
+
+<pre><code>## Error in apply(imgdat, 2, rev): object &#39;imgdat&#39; not found
+</code></pre>
+
+<pre><code class="r">par(mai=c(.5,.5,.01,.01))
+image(x=1:12, y=1:7, z=log(tmp), axes=FALSE, ylab=NA, xlab=NA)
+</code></pre>
+
+<pre><code>## Error in image.default(x = 1:12, y = 1:7, z = log(tmp), axes = FALSE, : object &#39;tmp&#39; not found
+</code></pre>
+
+<pre><code class="r">text(x=rep(1:12,7), y=rep(7:1,each=12), paste(t(imgtxt),&quot;:\n&quot;,t(round(imgdat,2)))) 
+</code></pre>
+
+<pre><code>## Error in t(imgtxt): object &#39;imgtxt&#39; not found
+</code></pre>
+
+<pre><code class="r">axis(1,at=1:12); axis(2, at=1:7, labels=toupper(letters[7:1]), las=2)
+</code></pre>
+
+<pre><code>## Error in axis(1, at = 1:12): plot.new has not been called yet
+</code></pre>
+
+<pre><code>## Error in axis(2, at = 1:7, labels = toupper(letters[7:1]), las = 2): plot.new has not been called yet
+</code></pre>
+
+<p><oq>In which order does <code>image</code> plot rows and columns of a matrix?</oq><br/> 
+<oq>Can you spot any systematic plate effects?</oq></p>
+
+<p><br/><br/>hide:
+pixels in the first row, from left to right,<br/> 
+correspond to the first column in the matrix, bottom up</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-43" style="background:;">
+  <hgroup>
+    <h3>Gene Expression - Summary</h3>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Growth rate \( \mu \) matters!</li>
+<li>Fluorescence per OD as a measure of proteins per cell.
+
+<ul>
+<li>Note noise accumulation at low values. <oq>Why?</oq></li>
+</ul></li>
+<li>Interpolate data to a common OD.</li>
+<li>Calculate fold-ratio to control.
+
+<ul>
+<li>Be careful; what is your control?</li>
+</ul></li>
+<li>Get data at a given OD, or search maximum, etc.</li>
+</ol>
+
+<p><br/>
+<oq>What other measures would be interesting or<br/>could be
+required for a quantitative model?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="centertext" id="slide-44" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Conversion of Carbon&amp;Energy Source S to biomass X:</h3>
+
+<p>S \(\rightarrow\) y X + (1-y) P</p>
+
+<p><oq>What are substrate S and product P in our experiments?</oq></p>
+
+<h3>Catalyzed by X:</h3>
+
+<p>\[
+\begin{equation}
+  \label{apeq:monod}
+  \begin{aligned}
+    \frac{\text{d}X}{\text{d}t} &= \mu X\\
+    \frac{\text{d}S}{\text{d}t} &= - \frac{1}{y} \mu X \\
+    \mu & =\mu_{max}\frac{S}{S+K}
+    %\mu &= f(S)
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<p><oq>How can we estimate the yield \(y\) ?</oq> <oq>Does \(y\) have units? Which?</oq><br/>
+<oq>What is the steady state of the system?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="centertext" id="slide-45" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Continuous Culture - Dilution Rate \(\; \phi\)</h3>
+
+<p>\[
+\begin{equation}
+  \label{apeq:monod2}
+  \begin{aligned}
+    \frac{\text{d}X}{\text{d}t} &= (\mu-\phi) X\\
+    \frac{\text{d}S}{\text{d}t} &= (S_{in}-S)\phi - \frac{1}{y} \mu X \\
+    \mu & =\mu_{max}\frac{S}{S+K}
+    %\mu &= f(S)
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<p><oq>What is the steady state of above system?<br/>
+What is the feedback structure of growth?<br/>
+Can above system show more complex dynamics, such as<br/>
+oscillations or multistablity?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-46" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells: Growth</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Fluorescent Protein F, total culture concentration:</h3>
+
+<p>\[
+\begin{equation}
+  \label{eq:Protein}
+  \begin{aligned}
+%  \frac{\text{d} F}{\text{d} t} = k X V_c - d F
+    \frac{\text{d}X}{\text{d}t} &= \mu X\\
+  \frac{\text{d} F}{\text{d} t} &= K(?) - \delta F
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<h3>Intracellular concentration:</h3>
+
+<p>\[
+\begin{equation}
+f = \frac{F}{X V_c}
+\end{equation}
+\]</p>
+
+<p><br/> <oq>What is \(K\), must be \(\sim X\), right ?</br>How can we
+map \(F\) from total culture to intracellular concentration \(f\)
+?<br/> Calculate \(\frac{\text{d} f}{\text{d} t}\).</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-47" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells : Growth</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[
+\begin{equation}
+  \begin{aligned}
+    f =& \frac{F}{X V_c} \;;\; v_f=X V_c\\
+    \dot{f} =& \dot{F}\frac{1}{X V_c} - \dot{X}\frac{F}{X}\frac{1}{X V_c}\\
+            =& \dot{F}\frac{1}{v_f} - \dot{X}\frac{F}{X}\frac{1}{v_f}\\
+            =& (K - \delta f\,v_f)\frac{1}{v_f} - \mu X \frac{f v_f}{X} \frac{1}{v_f}\\
+            =& \frac{K}{v_f} - (\delta + \mu)f\\
+          K =& k X V_c
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<p><oq>What is \(X V_c\) ?</oq><br/>
+<oq>Note the term \(\delta + \mu\) . What is it, and where did the \(\mu\) come from?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-48" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells : Growth</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[
+\begin{equation}
+  \label{apeq:wellmodel}
+  \begin{aligned}
+    \frac{\text{d}X}{\text{d}t} &= \mu X\\
+    \frac{\text{d}S}{\text{d}t} &= - \frac{1}{y} \mu X\\
+    \frac{\text{d}f}{\text{d}t} &= k - (\delta+\mu)f
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<p><br/></p>
+
+<ul>
+<li><oq>Add activation of \(f\) production by an inducer and
+modulation by a riboswitch \(r\).</oq></li>
+<li><oq>Add expression of both from a plasmid
+(which itself increases exponentially within cells).</oq> </li>
+<li><oq>And how could we account for
+the effect of induced gene expression on growth rate?</oq></li>
+</ul>
+
+<p><oq>. . . and find appropriate parameters (back in data hell),<br/> 
+start e.g. at <code>bionumbers</code>.</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-49" style="background:;">
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Parameter</th>
+<th>Unit</th>
+<th>Value</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>\(y\)</td>
+<td>g DCW / g glucose</td>
+<td>0.5</td>
+<td>yield factor \(\ \frac{\Delta X}{- \Delta S} \)</td>
+<td><a href="http://bionumbers.hms.harvard.edu/bionumber.aspx?&amp;id=105318&amp;ver=3">bionumbers</a></td>
+</tr>
+<tr>
+<td>\(V_c\)</td>
+<td>&mu;m<sup>3</sup></td>
+<td>1</td>
+<td>average cell volume</td>
+<td><a href="http://bionumbers.hms.harvard.edu/bionumber.aspx?id=101788">bionumbers</a></td>
+</tr>
+<tr>
+<td>\(C_c\)</td>
+<td>fg/&mu;m<sup>3</sup></td>
+<td>242&#8723;43</td>
+<td>cell carbon content</td>
+<td><a href="http://bionumbers.hms.harvard.edu/bionumber.aspx?&amp;id=106619">bionumbers</a></td>
+</tr>
+<tr>
+<td>DCW/OD</td>
+<td>(g/L)/OD</td>
+<td>0.36</td>
+<td>g DCW per OD600</td>
+<td><a href="http://bionumbers.hms.harvard.edu/bionumber.aspx?&amp;id=109837">bionumbers</a></td>
+</tr>
+<tr>
+<td>cells/OD</td>
+<td>(cells/mL)/OD</td>
+<td>5.9-21 1e8</td>
+<td>cells per OD600</td>
+<td><a href="">bionumbers</a></td>
+</tr>
+<tr>
+<td>\(\mu_{max}\)</td>
+<td>1/h</td>
+<td></td>
+<td>maximal growth rate</td>
+<td>estimate from exponential phase</td>
+</tr>
+<tr>
+<td>\(K\)</td>
+<td>mol/L</td>
+<td></td>
+<td>\(S\) where \(\mu = \mu_{max}/2 \)</td>
+<td>estimate from data</td>
+</tr>
+<tr>
+<td>\(k\)</td>
+<td>mol/(L*h)</td>
+<td></td>
+<td>protein expression rate</td>
+<td>search literature/databases</td>
+</tr>
+<tr>
+<td>\(\delta\)</td>
+<td>1/h</td>
+<td></td>
+<td>protein degradation rate</td>
+<td>search literature/databases</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-50" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells : Riboswitch</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[ \scriptsize
+\begin{equation}
+  \label{apeq:riboswitch}
+  \begin{aligned}
+    \frac{\text{d}sRNA}{\text{d}t} &= C P_{s} (TetR, aTc) - (\mu + \delta_s)sRNA\\
+    \frac{\text{d}mRNA}{\text{d}t} &= C P_{m} ( LacI,IPTG) - (\mu + \delta_m)mRNA\\
+    \frac{\text{d}GFP}{\text{d}t} &= (r_0 mRNA + r_1 sRNA::mRNA)\frac{m}{m+\mu+\delta_g} - (\mu + \delta_g)GFP
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<p>with transcriptional activities:</p>
+
+<p>\[ \tiny
+\begin{equation}
+  \label{apeq:transcription}
+  \begin{aligned}
+  P_m(LacI, IPTG) &= P_m^0 \frac{1+\frac{1}{f_{lac}}(\frac{LacI}{K_{lac}(1+\frac{IPTG}{K_{IPTG}})})^{n_{lac}}}{1+(\frac{LacI}{K_{lac}(1+\frac{IPTG}{K_{IPTG}})})^{n_{lac}}}\\
+  P_s(TetR,aTc) &= P_s^0 \frac{1+\frac{1}{f_{tet}}(\frac{TetR}{K_{tet}(1+\frac{aTc}{K_{aTc}})})^{n_{tet}}}{1+(\frac{TetR}{K_{tet}(1+\frac{aTc}{K_{aTc}})})^{n_{tet}}}\\
+  \end{aligned}
+\end{equation}
+\]</p>
+
+<p><oq>What and where is sRNA::mRNA?</oq><br/>
+<oq>What are all the parameters?</oq> <oq>Can you derive equations for the steady state?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-51" style="background:;">
+  <hgroup>
+    <h2>From Wells to Cells : Riboswitch</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Rodrigo <em>et al.</em> 2012 - Steady State Solution:</p>
+
+<p>\[ \scriptsize
+\begin{equation}
+  \label{apeq:steadystate}
+  GFP_{ss}(IPTG, aTc) = F_0 \frac{1 + f_1(\frac{IPTG}{K_1})^{n_{1}} + f_2(\frac{aTc}{K_2})^{n_{2}} + f_1 f_{sRNA}(\frac{IPTG}{K_1})^{n_{1}}(\frac{aTc}{K_2})^{n_{2}} }{1 + (\frac{IPTG}{K_1})^{n_{1}} + (\frac{aTc}{K_2})^{n_{2}} + (\frac{IPTG}{K_1})^{n_{1}}(\frac{aTc}{K_2})^{n_{2}}}
+\end{equation}
+\]</p>
+
+<p><br/></p>
+
+<p><oq>What are these parameters&gt;? See Supplement of Rodrigo <em>et al.</em> 
+2012</oq></p>
+
+<p><oq>Plot this function in <code>R</code> or <code>python</code>, using the<br/> concentration ranges 
+in your experiments: can you use <code>image</code>? Can <code>R</code> do 3D plots?</oq></p>
+
+<p><oq>Is the steady state assumption justified? Can we combine it with our cell growth model?</oq></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-52" style="background:;">
+  <hgroup>
+    <h3>Model</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">## Chaos in the atmosphere
+growth &lt;- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        #y  &lt;- a*S + b # variable yield, Heinzle et al. 1983
+        mu &lt;- mu_max*S/(S+K) 
+        dX &lt;-  mu*X
+        dS &lt;-  - mu*X/y
+        dp &lt;- (mu.p - mu) * p
+        df &lt;- p*k - (d+mu)*f
+        list(c(dX, dS, dp, df))
+    })
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-53" style="background:;">
+  <hgroup>
+    <h3>Solve</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(deSolve)
+
+parameters &lt;- c(mu_max = 1, K = 1, mu.p = 1, k = .1, d=.1, y=0.5)#, a=1, b=-1)
+state      &lt;- c(X = 0.001, S = 10, p = 1, f = 0)
+times      &lt;- seq(0, 20, by = 0.01)
+
+out &lt;- ode(y = state, times = times, func = growth, parms = parameters)
+
+par(mai=c(.75,.75,.1,.1))
+plot(out)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-32-1.png" alt="plot of chunk unnamed-chunk-32"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-54" style="background:;">
+  <hgroup>
+    <h3>Vary Parameters &amp; Initial Conditions</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ode.scan &lt;- function(id, val) {
+    outs &lt;- rep(list(NA),length(val))
+    for ( i in 1:length(val) ) {
+        if ( id %in% names(parameters) )
+            parameters[id] &lt;- val[i]
+        if ( id %in% names(state) )
+            state[id] &lt;- val[i]
+        outs[[i]] &lt;- ode(y = state, times = times, func = growth,
+                         parms = parameters)
+    }
+    outs
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-55" style="background:;">
+  <hgroup>
+    <h3>Vary Parameters &amp; Initial Conditions</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">par(mfcol=c(1,2),mai=c(.75,.75,.1,.1),mgp=c(1.7,.5,0))
+outs &lt;- ode.scan(&quot;K&quot;,seq(0.1,10,1))
+X &lt;- matrix(unlist(lapply(outs, function(x) x[,&quot;X&quot;])), ncol = length(times), byrow = TRUE)
+matplot(times,t(X),type=&quot;l&quot;,col=1:nrow(X),lty=1:nrow(X))
+legend(&quot;topleft&quot;,paste(&quot;K&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=1:nrow(X))
+
+outs &lt;- ode.scan(&quot;S&quot;,seq(0.1,10,1))
+X &lt;- matrix(unlist(lapply(outs, function(x) x[,&quot;X&quot;])), ncol = length(times), byrow = TRUE)
+matplot(times,t(X),type=&quot;l&quot;,col=1:nrow(X),lty=1:nrow(X))
+legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=1:nrow(X))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-34-1.png" alt="plot of chunk unnamed-chunk-34"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-56" style="background:;">
+  <hgroup>
+    <h3>Fit To Data</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><a href="https://www.r-bloggers.com/learning-r-parameter-fitting-for-models-involving-differential-equations/">https://www.r-bloggers.com/learning-r-parameter-fitting-for-models-involving-differential-equations/</a></p>
+
+<pre><code class="r">library(FME)
+</code></pre>
+
+<pre><code>## Loading required package: rootSolve
+</code></pre>
+
+<pre><code>## Loading required package: coda
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='NA'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='From Data Hell to Model Heaven : Why Platereader?'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='From Data Hell to Model Heaven and back.'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Installing R Packages from <code>cran</code>, <code>bioconductor</code> &amp; <code>github</code>'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='How to use a new R package?'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Why Growth Rates?'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Why Growth Rates?'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Why Growth Rates?'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='NA'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Cited at Wikipedia:'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Growth &amp; Gene Expression in <em>E. coli</em> : exponential growth'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Growth &amp; Gene Expression in <em>E. coli</em> : growth rate'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Growth &amp; Gene Expression in <em>E. coli</em> : doubling time'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Growth &amp; Gene Expression in <em>E. coli</em> : growth rate'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Load Your Data'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='NA'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='NA'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Linear and Non-linear Regression: analyzing a single data set'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='NA'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='NA'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='NA'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='NA'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='NA'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='NA'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Fitting Growth Models'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Prepare Data: blanks, cuts, etc.'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Get Replicate Groups'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Use Package <code>grofit</code> to Fit Growth Data'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Use Package <code>grofit</code> to Fit Growth Data'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='NA'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Gene Expression: Normalized Fluorescence - FL/OD'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Gene Expression: Normalized Fluorescence  - FL/OD'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Gene Expression: Normalized Fluorescence - FL/OD'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='Gene Expression: Normalized Fluorescence - Interpolate to OD'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Gene Expression: The Fold Change'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Gene Expression: Data Normalization'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='Gene Expression: Data Normalization - Result'>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title='Gene Expression: Data Normalization - Result'>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title='NA'>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='Gene Expression - Summary'>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='From Wells to Cells'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='From Wells to Cells'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title='From Wells to Cells: Growth'>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title='From Wells to Cells : Growth'>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title='From Wells to Cells : Growth'>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='NA'>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='From Wells to Cells : Riboswitch'>
+         50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title='From Wells to Cells : Riboswitch'>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title='Model'>
+         52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title='Solve'>
+         53
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=54 title='Vary Parameters &amp; Initial Conditions'>
+         54
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=55 title='Vary Parameters &amp; Initial Conditions'>
+         55
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=56 title='Fit To Data'>
+         56
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
