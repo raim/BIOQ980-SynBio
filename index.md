@@ -78,7 +78,7 @@ gain better quantitative understanding of cell growth <em>VS.</em> gene regulati
     * steady-state vs. dynamics
 
 <oq>Are tube and platereader cultures comparable?</oq><br/>
-<oq>What is the advantage of time-series?</oq><br/>
+<oq>Why Timeseries?</oq><br/>
 <oq>Why (not)?</oq>
 
 ---
@@ -138,7 +138,7 @@ demo("demo_ap12") # RUN THE DEMO
 getData # SEE WHAT A FUNCTION DOES: just type without brackets
 
 ## APPLY TO YOUR DATA:
-setwd("~/work/hhu_2015/uebung_201612/cellgrowth_20161214/praktikum_201612/test2/")
+setwd("~/work/hhu_talks/uebung_201612/cellgrowth_20161214/praktikum_201612/test2/")
 plate <- readPlateMap("161130_Praktikum_RAJ11_Test_2_layout.csv")
 files <- c("161130_Praktikum_RAJ11_Test_2.csv")
 raw <- readPlateData(files, type="Synergy",skip=44,sep=";",
@@ -401,40 +401,25 @@ text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
 ```r
 library(platexpress)
 
-dpath <- "~/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014"
+dpath <- "~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014"
 
 plate <-readPlateMap(file.path(dpath,"20161014_platemap.csv"), fsep=";",
                      fields=c("strain","IPTG","blank"))
-```
-
-```
-## Warning in file(file, "rt"): cannot open file '/home/
-## raim/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/
-## ecoli_ts_20161014/20161014_platemap.csv': No such file or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
-```r
 files <- c("20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV",
            "20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV")
 raw <- readPlateData(file.path(dpath,files), type="BMG", time.conversion=1/60)
 ```
 
 ```
-## Parsing file ~/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV
+## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
+## 	loading data 584 
+## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
+## 	loading data 485/Em520 
+## Interpolating all data to a single master time.
 ```
 
 ```
-## Warning in file(file, "rt"): cannot open file '/home/raim/work/hhu_2015/
-## uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014
-## IPTG mVenus Injection 1_Absorbance.CSV': No such file or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
+## Warning in listAverage(data, "time"): time : max. SD within timepoint is 70.5 % of median difference between time points.
 ```
 
 <oq> What does the `warning` mean?<oq/>

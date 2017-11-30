@@ -161,7 +161,7 @@ gain better quantitative understanding of cell growth <em>VS.</em> gene regulati
 </ol>
 
 <p><oq>Are tube and platereader cultures comparable?</oq><br/>
-<oq>What is the advantage of time-series?</oq><br/>
+<oq>Why Timeseries?</oq><br/>
 <oq>Why (not)?</oq></p>
 
   </article>
@@ -243,7 +243,7 @@ demo(&quot;demo_ap12&quot;) # RUN THE DEMO
 getData # SEE WHAT A FUNCTION DOES: just type without brackets
 
 ## APPLY TO YOUR DATA:
-setwd(&quot;~/work/hhu_2015/uebung_201612/cellgrowth_20161214/praktikum_201612/test2/&quot;)
+setwd(&quot;~/work/hhu_talks/uebung_201612/cellgrowth_20161214/praktikum_201612/test2/&quot;)
 plate &lt;- readPlateMap(&quot;161130_Praktikum_RAJ11_Test_2_layout.csv&quot;)
 files &lt;- c(&quot;161130_Praktikum_RAJ11_Test_2.csv&quot;)
 raw &lt;- readPlateData(files, type=&quot;Synergy&quot;,skip=44,sep=&quot;;&quot;,
@@ -578,34 +578,23 @@ text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
   <article data-timings="">
     <pre><code class="r">library(platexpress)
 
-dpath &lt;- &quot;~/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014&quot;
+dpath &lt;- &quot;~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014&quot;
 
 plate &lt;-readPlateMap(file.path(dpath,&quot;20161014_platemap.csv&quot;), fsep=&quot;;&quot;,
                      fields=c(&quot;strain&quot;,&quot;IPTG&quot;,&quot;blank&quot;))
-</code></pre>
-
-<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;/home/
-## raim/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/
-## ecoli_ts_20161014/20161014_platemap.csv&#39;: No such file or directory
-</code></pre>
-
-<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection
-</code></pre>
-
-<pre><code class="r">files &lt;- c(&quot;20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV&quot;,
+files &lt;- c(&quot;20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV&quot;,
            &quot;20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV&quot;)
 raw &lt;- readPlateData(file.path(dpath,files), type=&quot;BMG&quot;, time.conversion=1/60)
 </code></pre>
 
-<pre><code>## Parsing file ~/work/hhu_2015/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV
+<pre><code>## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
+##  loading data 584 
+## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
+##  loading data 485/Em520 
+## Interpolating all data to a single master time.
 </code></pre>
 
-<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;/home/raim/work/hhu_2015/
-## uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014
-## IPTG mVenus Injection 1_Absorbance.CSV&#39;: No such file or directory
-</code></pre>
-
-<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection
+<pre><code>## Warning in listAverage(data, &quot;time&quot;): time : max. SD within timepoint is 70.5 % of median difference between time points.
 </code></pre>
 
 <p><oq> What does the <code>warning</code> mean?<oq/></p>
