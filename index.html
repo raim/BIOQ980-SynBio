@@ -556,7 +556,7 @@ text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
   <article data-timings="">
     <pre><code class="r">library(platexpress)
 
-dpath &lt;- &quot;~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014&quot;
+dpath &lt;- &quot;~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014&quot;
 
 plate &lt;-readPlateMap(file.path(dpath,&quot;20161014_platemap.csv&quot;), fsep=&quot;;&quot;,
                      fields=c(&quot;strain&quot;,&quot;IPTG&quot;,&quot;blank&quot;))
@@ -565,9 +565,9 @@ files &lt;- c(&quot;20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV&qu
 raw &lt;- readPlateData(file.path(dpath,files), type=&quot;BMG&quot;, time.conversion=1/60)
 </code></pre>
 
-<pre><code>## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
+<pre><code>## Parsing file ~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
 ##  found data 584 
-## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
+## Parsing file ~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
 ##  found data 485/Em520 
 ## Interpolating all data to a single master time.
 </code></pre>

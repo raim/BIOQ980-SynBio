@@ -397,7 +397,7 @@ text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
 ```r
 library(platexpress)
 
-dpath <- "~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014"
+dpath <- "~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014"
 
 plate <-readPlateMap(file.path(dpath,"20161014_platemap.csv"), fsep=";",
                      fields=c("strain","IPTG","blank"))
@@ -407,9 +407,9 @@ raw <- readPlateData(file.path(dpath,files), type="BMG", time.conversion=1/60)
 ```
 
 ```
-## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
+## Parsing file ~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
 ## 	found data 584 
-## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
+## Parsing file ~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
 ## 	found data 485/Em520 
 ## Interpolating all data to a single master time.
 ```

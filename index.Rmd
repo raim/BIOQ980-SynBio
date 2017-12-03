@@ -382,7 +382,7 @@ text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
 ```{r, fig.width=6, fig.height=4}
 library(platexpress)
 
-dpath <- "~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014"
+dpath <- "~/work/hhu_talks/uebung_201712/experiments/ecoli_ts_20161014"
 
 plate <-readPlateMap(file.path(dpath,"20161014_platemap.csv"), fsep=";",
                      fields=c("strain","IPTG","blank"))
