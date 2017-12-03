@@ -1,0 +1,14 @@
+---
+## Why Platereader?
+
+### Shakeflask vs. Platereader Cultures
+
+1. Data Analysis
+    * many replicates, many conditions
+	* different statistics required
+2. Endpoint vs. Kinetics
+    * steady-state vs. dynamics
+
+<oq>Are tube and platereader cultures comparable?</oq><br/>
+<oq>Why Timeseries?</oq><br/>
+<oq>Why (not)?</oq>

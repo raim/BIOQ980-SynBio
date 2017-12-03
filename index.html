@@ -97,6 +97,35 @@ gain better quantitative understanding of cell growth <em>VS.</em> gene regulati
 </slide>
 
 <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>What is R?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>a Domain-Specific Language (DSL) for statistics and graphics</li>
+<li>written in <code>C</code>, the package <code>Rcpp</code> provides <code>C++</code> interface</li>
+<li>modern interfaces: <code>ggplot</code>, <code>tidyverse</code>, etc.</li>
+<li>especially apt for exploratory data analysis, and publication
+quality plots</li>
+</ul>
+
+<p><a href="https://www.r-bloggers.com/r-as-a-data-science-language/">https://www.r-bloggers.com/r-as-a-data-science-language/</a></p>
+
+<h2>The Drawing in Biology</h2>
+
+<p><img src="assets/img/rat_dissection.gif" height="190">
+<img src="assets/img/rat_colon.jpg" height="190">
+<img src="assets/img/rat_incisions_sm.gif" height="190"></p>
+
+<ul>
+<li><b>still the first step in biological modeling</b></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
   <article data-timings="">
     
 <div style='float:left;width:35%;'>
@@ -139,38 +168,9 @@ gain better quantitative understanding of cell growth <em>VS.</em> gene regulati
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-3" style="background:;">
-  <hgroup>
-    <h2>From Data Hell to Model Heaven : Why Platereader?</h2>
-  </hgroup>
-  <article data-timings="">
-    <h3>Tube vs. Platereader Cultures</h3>
-
-<ol>
-<li>Data Analysis
-
-<ul>
-<li>many replicates, many conditions</li>
-<li>different statistics required</li>
-</ul></li>
-<li>Endpoint vs. Kinetics
-
-<ul>
-<li>steady-state vs. dynamics</li>
-</ul></li>
-</ol>
-
-<p><oq>Are tube and platereader cultures comparable?</oq><br/>
-<oq>Why Timeseries?</oq><br/>
-<oq>Why (not)?</oq></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
 <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>From Data Hell to Model Heaven and back.</h2>
+    <h2>The Data Pipeline.</h2>
   </hgroup>
   <article data-timings="">
     <ol>
@@ -283,7 +283,7 @@ viewPlate(raw)
 
 <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h3>Why Growth Rates?</h3>
+    <h3>Why Growth Rates? The Copenhagen School</h3>
   </hgroup>
   <article data-timings="">
     
@@ -298,11 +298,9 @@ viewPlate(raw)
 
 </div>
 <div style='float:right;width:60%;'>
-  <p><img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="250"></p>
+  <p><img src="assets/img/data_RNA_nc.png" height="250"></p>
 
-<p>\( \Rightarrow \) Faster growth rate \(\mu\) with later or no induction.</p>
-
-<p><oq>\(\mu = k \frac{\text{ribosomes}}{\text{proteins}}\)</oq></p>
+<p><oq>\(\mu \sim k \frac{\text{ribosomes}}{\text{proteins}}\)</oq></p>
 
 <p><div  style='text-align: left;line-height: 90%;'><font size=3> 
 Schaechter, Maaloe &amp; Kjeldgaard, J Gen Microbiol <b> 1958</b>: <em>Dependency on medium and temperature of cell size and chemical composition during <oq>balanced growth</oq> of <em>Salmonella typhimurium</em>.</em><br/>
@@ -317,7 +315,7 @@ Neidhardt, J Bacteriol 1999: <em>Bacterial growth: constant obsession with dN/dt
 
 <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h3>Why Growth Rates?</h3>
+    <h3>Large groups of transcripts correlate with \(\mu\)</h3>
   </hgroup>
   <article data-timings="">
     
@@ -328,13 +326,15 @@ Neidhardt, J Bacteriol 1999: <em>Bacterial growth: constant obsession with dN/dt
 
 </div>
 <div style='float:right;width:60%;'>
-  <p><img src="assets/img/Ecoli_20161014_OD_growthrates.png" height="250"><oq>\(\mu = k \frac{\text{ribosomes}}{\text{proteins}}\)</oq></p>
+  <p><img src="assets/img/cluster_vs_rates_major.png" height="250"></p>
+
+<p><oq>\( \mu = \frac{1}{\tau} (\phi_R - \phi_r) \)</oq></p>
 
 <div  style='text-align: left;line-height: 90%;'><font size=3> 
-Brauer <em>et al.</em>, Mol Biol Cell 2008: <em>Coordination of growth rate, cell cycle, stress response, and metabolic activity in yeast.</em><br/>
-Slavov <em>et al.</em>, Mol Biol Cell 2011: <em>Coupling among growth rate response, metabolic cycle, and cell division cycle in yeast.</em><br/>
+<oq>Gasch <em>et al.</em>, Brauer <em>et al.</em>, Airoldi <em>et al.</em>, Slavov <em>et al.</em> Mol Biol Cell 2000-2014: <em>transcript levels \(\sim \mu\) in budding yeast</em></oq><br/>
+Slavov *et al.*, Cell Rep 2014: *Constant growth rate can be supported by decreasing energy flux and increasing aerobic glycolysis.*<br/>
 Scott <em>et al.</em>, Science 2010: <em>Interdependence of cell growth and gene expression: origins and consequences.</em></br>
-Wei&szlig;e <em>et al.</em>, PNAS 2015: <em>Mechanistic links between cellular trade-offs, gene expression, and growth.</em>
+<oq>Wei&szlig;e <em>et al.</em>, PNAS 2015: <em>Mechanistic links between cellular trade-offs, gene expression, and growth.</em></oq>
 </font></div>
 
 </div>
@@ -343,28 +343,28 @@ Wei&szlig;e <em>et al.</em>, PNAS 2015: <em>Mechanistic links between cellular t
 </slide>
 
 <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h3>... but also vary during exponential growth</h3>
+  </hgroup>
   <article data-timings="">
     
 <div style='float:left;width:35%;'>
-  <p><img src="assets/img/scott14_fig1b.png" height="220"></p>
+  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
 
-<p><img src="assets/img/scott14_fig4.png" height="220"></p>
-
-<p>Scott <em>et al.</em>, Mol Syst Biol 2014: <em>Emergence of robust growth laws from optimal regulation of ribosome synthesis.</em></p>
+<p><img src="assets/img/scott14_fig1b.png" height="220"></p>
 
 </div>
 <div style='float:right;width:60%;'>
-  <p><img src="assets/img/cluster_vs_rates_major.png" height="200"><br/>
-<oq>Expression of large gene groups correlates with \(\mu\).</oq></p>
+  <p><img src="assets/img/slavov14_selected_transcripts.png" height="250"></p>
 
-<p><img src="assets/img/slavov14_selected_transcripts.png" height="200"><br/>
-<oq>Even at constant \(\mu\) cells are not 
-in steady-state!</oq></p>
+<p><oq>\( \mu = \frac{1}{\tau} (\phi_R - \phi_r) \)</oq></p>
 
-<p>Slavov <em>et al.</em>, Cell Rep 2014: <em>Constant growth rate can be supported by decreasing energy flux and increasing aerobic glycolysis.</em><br/></p>
-
-<p>The concept of &quot;balanced growth&quot; is flawed, yet a central assumption
-of many quantitative models.</p>
+<div  style='text-align: left;line-height: 90%;'><font size=3> 
+Gasch <em>et al.</em>, Brauer <em>et al.</em>, Airoldi <em>et al.</em>, Slavov <em>et al.</em> Mol Biol Cell 2000-2014: <em>transcript levels \(\sim \mu\) in budding yeast</em><br/>
+<oq>Slavov *et al.*, Cell Rep 2014: *Constant growth rate can be supported by decreasing energy flux and increasing aerobic glycolysis.*</oq><br/>
+Scott <em>et al.</em>, Science 2010: <em>Interdependence of cell growth and gene expression: origins and consequences.</em></br>
+<oq>Wei&szlig;e <em>et al.</em>, PNAS 2015: <em>Mechanistic links between cellular trade-offs, gene expression, and growth.</em></oq>
+</font></div>
 
 </div>
   </article>
@@ -372,21 +372,6 @@ of many quantitative models.</p>
 </slide>
 
 <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h3>Cited at Wikipedia:</h3>
-  </hgroup>
-  <article data-timings="">
-    <p><img src="assets/img/expogrowth_wiki_slavovcit.png" width="900"></p>
-
-<p class=''>. . that&#39;s how important it is (or perhaps it was his dad :p ).</br></p>
-
-<p>[1] Slavov <em>et al.</em>, Cell Rep 2014: <em>Constant growth rate can be supported by<br/>decreasing energy flux and increasing aerobic glycolysis.</em><br/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h3>DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).</h3>
   </hgroup>
@@ -406,18 +391,17 @@ of many quantitative models.</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h3>DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).</h3>
   </hgroup>
   <article data-timings="">
-    <p><img src="assets/img/kai_20161207.png" height="310"> \(\Leftarrow \) &copy; Kai, today</p>
+    <p><img src="assets/img/20171103_salima_4ugCQ.png" height="310"> </p>
 
 <p>Interested in a bachelor/master project? </p>
 
 <ul>
-<li>Working on <code>platexpress</code> and/or quantitative models of growth vs. gene expression.</li>
-<li>At the interface of three projects: Ribonets, Coil-seq &amp; Yeast Oscillations.</li>
+<li>Quantitative models of growth vs. gene expression.</li>
 </ul>
 
 <p>Fulcrand <em>et al.</em>, Sci Rep 2016: <em>DNA supercoiling, a critical signal<br/>regulating the basal expression of the lac operon in Escherichia coli.</em></p>
@@ -426,16 +410,14 @@ of many quantitative models.</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-14" style="background:;">
+<slide class="codefont" id="slide-13" style="background:;">
   <hgroup>
     <h3>Growth &amp; Gene Expression in <em>E. coli</em> : exponential growth</h3>
   </hgroup>
   <article data-timings="">
     
 <div style='float:left;width:48%;' class='centered'>
-  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
-
-<p>\[ 
+  <p>\[ 
 \begin{equation*} \begin{aligned}  
 \frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
 X(t) =& X(0)   e^{\mu  t}\\ 
@@ -461,16 +443,14 @@ plot(time, xt,
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-15" style="background:;">
+<slide class="codefont" id="slide-14" style="background:;">
   <hgroup>
     <h3>Growth &amp; Gene Expression in <em>E. coli</em> : growth rate</h3>
   </hgroup>
   <article data-timings="">
     
 <div style='float:left;width:48%;' class='centered'>
-  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
-
-<p>\[ 
+  <p>\[ 
 \begin{equation*} \begin{aligned}  
 \frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
 X(t) =& X(0)   e^{\mu  t}\\ 
@@ -497,16 +477,14 @@ plot(time, log(xt/x0),
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-16" style="background:;">
+<slide class="codefont" id="slide-15" style="background:;">
   <hgroup>
     <h3>Growth &amp; Gene Expression in <em>E. coli</em> : doubling time</h3>
   </hgroup>
   <article data-timings="">
     
 <div style='float:left;width:48%;' class='centered'>
-  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
-
-<p>\[ 
+  <p>\[ 
 \begin{equation*} \begin{aligned}  
 \frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
 X(t) =& X(0)   e^{\mu  t}\\ 
@@ -534,16 +512,14 @@ plot(time, log(xt/x0),
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-17" style="background:;">
+<slide class="codefont" id="slide-16" style="background:;">
   <hgroup>
     <h3>Growth &amp; Gene Expression in <em>E. coli</em> : growth rate</h3>
   </hgroup>
   <article data-timings="">
     
 <div style='float:left;width:35%;'>
-  <p><img src="assets/img/ecoli_20141014.png" height="250"></p>
-
-<p>\[ 
+  <p>\[ 
 \begin{equation*} \begin{aligned}  
 \frac{\text{d}X(t)}{\text{d}t} =& \mu X(t)\\ 
 X(t) =& X(0)   e^{\mu  t}\\ 
@@ -557,9 +533,11 @@ plot(time, log(xt), xlab=&quot;time, h&quot;,ylab=expression(ln~X(t)))
 x1 &lt;- .05; idx1 &lt;- which(abs(xt-x1)==min(abs(xt-x1)))
 x2 &lt;- .1; idx2 &lt;- which(abs(xt-x2)==min(abs(xt-x2)))
 lines(x=time[c(idx1,idx2)], y=log(xt[c(idx1,idx1)]),col=2,lwd=5)
-text(time[idx2],mean(log(xt[c(idx1,idx2)])),expression(Delta~X),pos=4,col=2)
+text(time[idx2],mean(log(xt[c(idx1,idx2)])),
+     expression(Delta~X),pos=4,col=2)
 lines(x=time[c(idx2,idx2)], y=log(xt[c(idx1,idx2)]),col=2,lwd=5)
-text(mean(time[c(idx1,idx2)]),log(xt[idx1]),expression(Delta~t),pos=1,col=2)
+text(mean(time[c(idx1,idx2)]),log(xt[idx1]),
+     expression(Delta~t),pos=1,col=2)
 arrows(x0=0,x1=0,y0=log(xt[1]),y1=-1.4,col=2,lwd=5);
 text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
 </code></pre>
@@ -571,7 +549,7 @@ text(x=0,y=-3,expression(ln(X(0))),pos=4,col=2)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-18" style="background:;">
+<slide class="codefont" id="slide-17" style="background:;">
   <hgroup>
     <h3>Load Your Data</h3>
   </hgroup>
@@ -588,9 +566,9 @@ raw &lt;- readPlateData(file.path(dpath,files), type=&quot;BMG&quot;, time.conve
 </code></pre>
 
 <pre><code>## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Absorbance.CSV 
-##  loading data 584 
+##  found data 584 
 ## Parsing file ~/work/hhu_talks/uebung_201612/Praktikum-M4452_20161207/ecoli_ts_20161014/20161014_20161014 IPTG mVenus Injection  1_Fluorescence.CSV 
-##  loading data 485/Em520 
+##  found data 485/Em520 
 ## Interpolating all data to a single master time.
 </code></pre>
 
@@ -603,7 +581,7 @@ raw &lt;- readPlateData(file.path(dpath,files), type=&quot;BMG&quot;, time.conve
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <article data-timings="">
     <pre><code class="r">showSpectrum() # try: findWavelength(3)
 </code></pre>
@@ -611,58 +589,61 @@ raw &lt;- readPlateData(file.path(dpath,files), type=&quot;BMG&quot;, time.conve
 <p><img src="assets/fig/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8"></p>
 
 <pre><code class="r">## re-name and color data
-raw &lt;- prettyData(raw, dids=c(OD=&quot;584&quot;,mVenus=&quot;485/Em520&quot;),
-                  colors=c(&quot;#000000&quot;,wavelength2RGB(600)))
+raw2 &lt;- prettyData(raw, dids=c(OD=&quot;584&quot;,mVenus=&quot;485/Em520&quot;),
+                   colors=c(&quot;#000000&quot;,wavelength2RGB(600)))
 </code></pre>
 
-<pre><code>## Error in data$mids: object of type &#39;closure&#39; is not subsettable
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">vp &lt;- viewPlate(raw2,xlim=c(0,1800),xscale=TRUE)
 </code></pre>
+
+<pre><code>## x-axis: Time 
+## plotting OD;mVenus
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9"></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h3>Linear and Non-linear Regression: analyzing a single data set</h3>
+  </hgroup>
   <article data-timings="">
-    <pre><code class="r">vp &lt;- viewPlate(raw,xlim=c(0,1800),xscale=TRUE)
+    <pre><code class="r">## GET A SINGLE DATASET
+od &lt;- getData(raw2,&quot;OD&quot;) # what is `od` ?
+TIME &lt;- raw2$Time        # what does the $ do?
+Xt &lt;- od[,&quot;A8&quot;]
+plot(TIME, Xt)
 </code></pre>
 
-<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10"></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-21" style="background:;">
-  <hgroup>
-    <h3>Linear and Non-linear Regression: analyzing a single data set</h3>
-  </hgroup>
   <article data-timings="">
-    <pre><code class="r">## GET A SINGLE DATASET
-od &lt;- getData(raw,&quot;OD&quot;) # what is `od` ?
+    <pre><code class="r">## cut to growth range
+rng &lt;- TIME&lt;1500   # what is `rng` ?
+Xt &lt;- Xt[rng]
+TIME &lt;- TIME[rng]
+
+## look at data
+par(mfcol=c(1,2), mai=c(.75,.75,.1,.1), mgp=c(1.5,.5,0), cex=1.2)
+plot(TIME, Xt)
+plot(TIME, log(Xt)) # log it - default `log` in R is the natural logarithm, ln
 </code></pre>
 
-<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">TIME &lt;- raw$Time        # what does the $ do?
-</code></pre>
-
-<pre><code>## Error in raw$Time: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">Xt &lt;- od[,&quot;A8&quot;]
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;od&#39; not found
-</code></pre>
-
-<pre><code class="r">plot(TIME, Xt)
-</code></pre>
-
-<pre><code>## Error in plot(TIME, Xt): object &#39;TIME&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11"></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -670,65 +651,12 @@ od &lt;- getData(raw,&quot;OD&quot;) # what is `od` ?
 
 <slide class="" id="slide-22" style="background:;">
   <article data-timings="">
-    <pre><code class="r">## cut to growth range
-rng &lt;- TIME&lt;1500   # what is `rng` ?
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">Xt &lt;- Xt[rng]
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;Xt&#39; not found
-</code></pre>
-
-<pre><code class="r">TIME &lt;- TIME[rng]
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">## look at data
-par(mfcol=c(1,2), mai=c(.75,.75,.1,.1), mgp=c(1.5,.5,0), cex=1.2)
-plot(TIME, Xt)
-</code></pre>
-
-<pre><code>## Error in plot(TIME, Xt): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">plot(TIME, log(Xt)) # log it - default `log` in R is the natural logarithm, ln
-</code></pre>
-
-<pre><code>## Error in plot(TIME, log(Xt)): object &#39;TIME&#39; not found
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-23" style="background:;">
-  <article data-timings="">
     <pre><code class="r">## cut to linear range of growth
 rng &lt;- TIME&gt;600 &amp; TIME &lt; 900
-</code></pre>
+xt &lt;- Xt[rng]
+time &lt;- TIME[rng]
 
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">xt &lt;- Xt[rng]
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;Xt&#39; not found
-</code></pre>
-
-<pre><code class="r">time &lt;- TIME[rng]
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">## look again at data
+## look again at data
 par(mfcol=c(1,2))
 plot(time, xt)
 plot(time, log(xt))
@@ -740,7 +668,7 @@ plot(time, log(xt))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-24" style="background:;">
+<slide class="codefont" id="slide-23" style="background:;">
   <article data-timings="">
     <pre><code class="r">## DO LINEAR REGRESSION
 ## ln(X(t)) = mu * t + ln(X(0))
@@ -750,35 +678,31 @@ lfit &lt;- lm(log(xt) ~ time) # what is `~` ?
 summary(lfit)
 </code></pre>
 
-<pre><code>## Warning in summary.lm(lfit): essentially perfect fit: summary may be
-## unreliable
-</code></pre>
-
 <pre><code>## 
 ## Call:
 ## lm(formula = log(xt) ~ time)
 ## 
 ## Residuals:
-##        Min         1Q     Median         3Q        Max 
-## -1.207e-14 -1.196e-16  1.336e-16  3.636e-16  1.065e-15 
+##       Min        1Q    Median        3Q       Max 
+## -0.021694 -0.006298 -0.001451  0.006707  0.023853 
 ## 
 ## Coefficients:
-##               Estimate Std. Error    t value Pr(&gt;|t|)    
-## (Intercept) -4.605e+00  2.679e-16 -1.719e+16   &lt;2e-16 ***
-## time         3.000e-01  4.628e-17  6.482e+15   &lt;2e-16 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.840e+00  1.122e-02  -164.0   &lt;2e-16 ***
+## time         7.663e-04  1.488e-05    51.5   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.356e-15 on 99 degrees of freedom
-## Multiple R-squared:      1,  Adjusted R-squared:      1 
-## F-statistic: 4.202e+31 on 1 and 99 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 0.01001 on 58 degrees of freedom
+## Multiple R-squared:  0.9786, Adjusted R-squared:  0.9782 
+## F-statistic:  2652 on 1 and 58 DF,  p-value: &lt; 2.2e-16
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <article data-timings="">
     <pre><code class="r">## get parameters from linear regression
 x0.1 &lt;- exp(coefficients(lfit)[1]) # e^ln(X(0)) = ?
@@ -787,15 +711,41 @@ mu.1 &lt;- coefficients(lfit)[2] # mu
 ## plot
 par(mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
 plot(TIME,log(Xt))
+lines(TIME, mu.1*TIME + log(x0.1), col=&quot;red&quot;)
 </code></pre>
 
-<pre><code>## Error in plot(TIME, log(Xt)): object &#39;TIME&#39; not found
+<p><img src="assets/fig/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont" id="slide-25" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">## DO NON-LINEAR REGRESSION, using
+## the results of the linear fit as initial parameter guesses
+dat &lt;- data.frame(time=time, xt=xt)
+start &lt;- list(mu=mu.1,x0=x0.1)
+nlfit &lt;- nls(xt ~ x0*exp(mu*time),data=dat,start=start) # TRY MORE COMPLEX MODELS, see a few slides ahead
+
+## check quality of fit
+summary(nlfit)
 </code></pre>
 
-<pre><code class="r">lines(TIME, mu.1*TIME + log(x0.1), col=&quot;red&quot;)
-</code></pre>
-
-<pre><code>## Error in lines(TIME, mu.1 * TIME + log(x0.1), col = &quot;red&quot;): object &#39;TIME&#39; not found
+<pre><code>## 
+## Formula: xt ~ x0 * exp(mu * time)
+## 
+## Parameters:
+##     Estimate Std. Error t value Pr(&gt;|t|)    
+## mu 7.660e-04  1.474e-05   51.99   &lt;2e-16 ***
+## x0 1.588e-01  1.792e-03   88.63   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.002792 on 58 degrees of freedom
+## 
+## Number of iterations to convergence: 1 
+## Achieved convergence tolerance: 2.422e-06
 </code></pre>
 
   </article>
@@ -804,85 +754,21 @@ plot(TIME,log(Xt))
 
 <slide class="codefont" id="slide-26" style="background:;">
   <article data-timings="">
-    <pre><code class="r">## DO NON-LINEAR REGRESSION, using
-## the results of the linear fit as initial parameter guesses
-dat &lt;- data.frame(time=time, xt=xt)
-start &lt;- list(mu=mu.1,x0=x0.1)
-nlfit &lt;- nls(xt ~ x0*exp(mu*time),data=dat,start=start) # TRY MORE COMPLEX MODELS, see a few slides ahead
-</code></pre>
-
-<pre><code>## Error in nls(xt ~ x0 * exp(mu * time), data = dat, start = start): number of iterations exceeded maximum of 50
-</code></pre>
-
-<pre><code class="r">## check quality of fit
-summary(nlfit)
-</code></pre>
-
-<pre><code>## Error in summary(nlfit): object &#39;nlfit&#39; not found
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="codefont" id="slide-27" style="background:;">
-  <article data-timings="">
     <pre><code class="r">## get parameters &amp; plot results
 mu.2 &lt;- coefficients(nlfit)[1]
-</code></pre>
-
-<pre><code>## Error in coefficients(nlfit): object &#39;nlfit&#39; not found
-</code></pre>
-
-<pre><code class="r">x0.2 &lt;- coefficients(nlfit)[2]
-</code></pre>
-
-<pre><code>## Error in coefficients(nlfit): object &#39;nlfit&#39; not found
-</code></pre>
-
-<pre><code class="r">par(mfcol=c(1,2),mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
+x0.2 &lt;- coefficients(nlfit)[2]
+par(mfcol=c(1,2),mai=c(.75,.75,.1,.1),mgp=c(1.5,.5,0),cex=1.2)
 plot(TIME,Xt,ylim=c(0.2,.4))
-</code></pre>
-
-<pre><code>## Error in plot(TIME, Xt, ylim = c(0.2, 0.4)): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">lines(TIME, x0.2 * exp(TIME*mu.2),col=&quot;green&quot;, lty=2,lwd=5)
-</code></pre>
-
-<pre><code>## Error in lines(TIME, x0.2 * exp(TIME * mu.2), col = &quot;green&quot;, lty = 2, : object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">lines(TIME, x0.1 * exp(TIME*mu.1),col=&quot;red&quot;,lwd=2)
-</code></pre>
-
-<pre><code>## Error in lines(TIME, x0.1 * exp(TIME * mu.1), col = &quot;red&quot;, lwd = 2): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">legend(&quot;bottomright&quot;,legend=c(&quot;data&quot;,&quot;lin.reg.&quot;,&quot;non-lin.&quot;),
+lines(TIME, x0.2 * exp(TIME*mu.2),col=&quot;green&quot;, lty=2,lwd=5)
+lines(TIME, x0.1 * exp(TIME*mu.1),col=&quot;red&quot;,lwd=2)
+legend(&quot;bottomright&quot;,legend=c(&quot;data&quot;,&quot;lin.reg.&quot;,&quot;non-lin.&quot;),
        col=c(1,2,3),pch=c(1,NA,NA),lty=c(NA,1,2),lwd=3)
+plot(TIME, x0.2 * exp(TIME*mu.2),col=&quot;green&quot;, lty=2,lwd=5)
+points(TIME,Xt)
+lines(TIME, x0.1 * exp(TIME*mu.1),col=&quot;red&quot;,lwd=2)
 </code></pre>
 
-<pre><code>## Error in strwidth(legend, units = &quot;user&quot;, cex = cex, font = text.font): plot.new has not been called yet
-</code></pre>
-
-<pre><code class="r">plot(TIME, x0.2 * exp(TIME*mu.2),col=&quot;green&quot;, lty=2,lwd=5)
-</code></pre>
-
-<pre><code>## Error in plot(TIME, x0.2 * exp(TIME * mu.2), col = &quot;green&quot;, lty = 2, lwd = 5): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">points(TIME,Xt)
-</code></pre>
-
-<pre><code>## Error in points(TIME, Xt): object &#39;TIME&#39; not found
-</code></pre>
-
-<pre><code class="r">lines(TIME, x0.1 * exp(TIME*mu.1),col=&quot;red&quot;,lwd=2)
-</code></pre>
-
-<pre><code>## Error in lines(TIME, x0.1 * exp(TIME * mu.1), col = &quot;red&quot;, lwd = 2): object &#39;TIME&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"></p>
 
 <p><oq>How many linear phases can you detect in your experiments? Why are there several?</oq></p>
 
@@ -890,7 +776,7 @@ plot(TIME,Xt,ylim=c(0.2,.4))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h3>Fitting Growth Models</h3>
   </hgroup>
@@ -930,36 +816,27 @@ plot(TIME,Xt,ylim=c(0.2,.4))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-29" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h3>Prepare Data: blanks, cuts, etc.</h3>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">raw2 &lt;- cutData(raw, rng=c(0,1550), mid=&quot;Time&quot;)
+    <pre><code class="r">raw3 &lt;- cutData(raw2, rng=c(0,1550), mid=&quot;Time&quot;)
+raw4 &lt;- correctBlanks(raw3, plate,dids=&quot;OD&quot;,max.mid=1500) 
 </code></pre>
 
-<pre><code>## Error in data[[mid]]: object of type &#39;closure&#39; is not subsettable
+<pre><code>## blanking OD 
+## blanking TRUE : 84 wells, using 12 blank wells
+## OD 
+##  time bin: 1 1 - 309 skipping 10 bins at 1500 
+##  blank: 0.2435858298247
 </code></pre>
 
-<pre><code class="r">raw3 &lt;- correctBlanks(raw2, plate,dids=&quot;OD&quot;,max.mid=1500) 
-</code></pre>
-
-<pre><code>## Error in correctBlanks(raw2, plate, dids = &quot;OD&quot;, max.mid = 1500): object &#39;raw2&#39; not found
-</code></pre>
-
-<pre><code class="r">raw4 &lt;- correctBlanks(raw3,plate,dids=&quot;mVenus&quot;,by=c(&quot;strain&quot;,&quot;IPTG&quot;),
+<pre><code class="r">raw5 &lt;- correctBlanks(raw4,plate,dids=&quot;mVenus&quot;,by=c(&quot;strain&quot;,&quot;IPTG&quot;),
                       mbins=length(raw$Time)/5,verb=FALSE)
-</code></pre>
-
-<pre><code>## Error in correctBlanks(raw3, plate, dids = &quot;mVenus&quot;, by = c(&quot;strain&quot;, : object &#39;raw3&#39; not found
-</code></pre>
-
-<pre><code class="r">data &lt;- adjustBase(raw4, base=0, add.fraction=.001, 
+data &lt;- adjustBase(raw5, base=0, add.fraction=.001, 
                    wells=unlist(groups),xlim=c(1,which(raw$Time&gt;1500)[1]),
                    each=TRUE, verb=FALSE) # set verb to TRUE
-</code></pre>
-
-<pre><code>## Error in adjustBase(raw4, base = 0, add.fraction = 0.001, wells = unlist(groups), : unused argument (wells = unlist(groups))
 </code></pre>
 
 <p><oq> What happens in <code>correctBlanks</code> and <code>cutData</code>? <br/>
@@ -969,28 +846,17 @@ What does <code>adjustBase</code> do, and when could we need it?<p/></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-30" style="background:;">
+<slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h3>Get Replicate Groups</h3>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">groups &lt;- getGroups(plate, c(&quot;strain&quot;), verb=FALSE) # SET TO TRUE!
+groups2 &lt;- getGroups(plate, c(&quot;strain&quot;,&quot;IPTG&quot;), verb=FALSE) 
+viewGroups(data, groups=groups, groups2=groups2, verb=FALSE)
 </code></pre>
 
-<pre><code>## Error in lapply(plate, function(x) as.character(x)): object &#39;plate&#39; not found
-</code></pre>
-
-<pre><code class="r">groups2 &lt;- getGroups(plate, c(&quot;strain&quot;,&quot;IPTG&quot;), verb=FALSE) 
-</code></pre>
-
-<pre><code>## Error in lapply(plate, function(x) as.character(x)): object &#39;plate&#39; not found
-</code></pre>
-
-<pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, verb=FALSE)
-</code></pre>
-
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-18-1.png" alt="plot of chunk unnamed-chunk-18"></p>
 
 <p><oq> What are the lines and areas?<br/>
 What is the structure of the <code>groups</code> item? 
@@ -1001,60 +867,2205 @@ Try different groupings and parameters to <code>viewGroups</code>.</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-31" style="background:;">
+<slide class="" id="slide-30" style="background:;">
   <hgroup>
     <h3>Use Package <code>grofit</code> to Fit Growth Data</h3>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">raw2 &lt;- cutData(raw,rng=c(200,1500))
-</code></pre>
-
-<pre><code>## Error in data$mids: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">grodat &lt;- data2grofit(raw2, did=&quot;OD&quot;, plate=plate, 
+    <pre><code class="r">raw3 &lt;- cutData(raw2,rng=c(200,1500))
+grodat &lt;- data2grofit(raw3, did=&quot;OD&quot;, plate=plate, 
                       wells=groups[[&quot;pUC18mV&quot;]])
-</code></pre>
-
-<pre><code>## Error in data2grofit(raw2, did = &quot;OD&quot;, plate = plate, wells = groups[[&quot;pUC18mV&quot;]]): object &#39;raw2&#39; not found
-</code></pre>
-
-<pre><code class="r">library(grofit)
+library(grofit)
 fitparams &lt;- grofit.2.control(interactive=FALSE, plot=TRUE) # SET ALL TO TRUE!!
 pdf(&quot;growthrates.pdf&quot;)
 fits &lt;- gcFit.2(time=grodat$time, data=grodat$data, control=fitparams)
 </code></pre>
 
-<pre><code>## Error in gcFit.2(time = grodat$time, data = grodat$data, control = fitparams): object &#39;grodat&#39; not found
+<pre><code>## 
+## 
+## = 1. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 2. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 3. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 4. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 5. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 6. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 7. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 8. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 9. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 10. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 11. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 12. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## Warning in grofit::gcFitModel(acttime, actwell, gcID, control): gcFitModel:
+## Unable to fit this curve parametrically!
+</code></pre>
+
+<pre><code>## 
+## 
+## = 13. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 14. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 15. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 16. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 17. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 18. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 19. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 20. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 21. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 22. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 23. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 24. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 25. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 26. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 27. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 28. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 29. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 30. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 31. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 32. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 33. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 34. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 35. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 36. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 37. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 38. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 39. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 40. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 41. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 42. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 43. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 44. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 45. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 46. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 47. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 48. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 49. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 50. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 51. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 52. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 53. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 54. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 55. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 56. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 57. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 58. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 59. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 60. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 61. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 62. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 63. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 64. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 65. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 66. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 67. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 68. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 69. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 70. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 71. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## Warning in grofit::gcFitModel(acttime, actwell, gcID, control): gcFitModel:
+## Unable to fit this curve parametrically!
+</code></pre>
+
+<pre><code>## 
+## 
+## = 72. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 73. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 74. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 75. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 76. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## 
+## 
+## = 77. growth curve =================================
+## ----------------------------------------------------
+## --&gt; Try to fit model logistic
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model richards
+</code></pre>
+
+<pre><code>## ....... ERROR in nls(). For further information see help(gcFitModel)
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz
+</code></pre>
+
+<pre><code>## ....... OK
+</code></pre>
+
+<pre><code>## --&gt; Try to fit model gompertz.exp
+</code></pre>
+
+<pre><code>## ... ERROR in nls(). For further information see help(gcFitModel)
 </code></pre>
 
 <pre><code class="r">dev.off()
 </code></pre>
 
-<pre><code>## png 
-##   2
+<pre><code>## X11cairo 
+##        2
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-32" style="background:;">
+<slide class="" id="slide-31" style="background:;">
   <hgroup>
     <h3>Use Package <code>grofit</code> to Fit Growth Data</h3>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">table &lt;- grofitGetParameters(fits, p=c(&quot;AddId&quot;,&quot;mu.spline&quot;))
+boxplot(table[,&quot;mu.spline&quot;] ~ table[,&quot;AddId&quot;], las=2, ylim=c(1.9e-4,5e-4))
 </code></pre>
 
-<pre><code>## Error in grofitGetParameters(fits, p = c(&quot;AddId&quot;, &quot;mu.spline&quot;)): object &#39;fits&#39; not found
-</code></pre>
-
-<pre><code class="r">boxplot(table[,&quot;mu.spline&quot;] ~ table[,&quot;AddId&quot;], las=2, ylim=c(1.9e-4,5e-4))
-</code></pre>
-
-<pre><code>## Error in table[, &quot;mu.spline&quot;]: object of type &#39;closure&#39; is not subsettable
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20"></p>
 
 <p><oq> 
 Try different well groups instead of <code>table[,&quot;AddId&quot;]</code>.<br/>
@@ -1064,7 +3075,7 @@ Are the fits Ok? How to get more information on the fits?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-33" style="background:;">
+<slide class="" id="slide-32" style="background:;">
   <article data-timings="">
     
 <div style='float:left;width:48%;' class='centered'>
@@ -1095,7 +3106,7 @@ Are the fits Ok? How to get more information on the fits?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-34" style="background:;">
+<slide class="" id="slide-33" style="background:;">
   <hgroup>
     <h3>Gene Expression: Normalized Fluorescence - FL/OD</h3>
   </hgroup>
@@ -1103,48 +3114,31 @@ Are the fits Ok? How to get more information on the fits?</oq></p>
     <pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, xid=&quot;OD&quot;, lwd.orig=.5, verb=FALSE)
 </code></pre>
 
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
+<p><img src="assets/fig/unnamed-chunk-21-1.png" alt="plot of chunk unnamed-chunk-21"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h3>Gene Expression: Normalized Fluorescence  - FL/OD</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">fl &lt;- getData(data,&quot;mVenus&quot;)
+od &lt;- getData(data,&quot;OD&quot;)
+data &lt;- addData(data, ID=&quot;mV/OD&quot;, dat=fl/od, col=&quot;#0095FF&quot;)
+viewGroups(data, groups=groups, groups2=groups2, 
+           dids=c(&quot;OD&quot;,&quot;mV/OD&quot;),ylims=list(&quot;mV/OD&quot;=c(0,1e4)),emphasize.mean=T,verb=F)
 </code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22"></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-35" style="background:;">
-  <hgroup>
-    <h3>Gene Expression: Normalized Fluorescence  - FL/OD</h3>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">fl &lt;- getData(data,&quot;mVenus&quot;)
-</code></pre>
-
-<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">od &lt;- getData(data,&quot;OD&quot;)
-</code></pre>
-
-<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">data &lt;- addData(data, ID=&quot;mV/OD&quot;, dat=fl/od, col=&quot;#0095FF&quot;)
-</code></pre>
-
-<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">viewGroups(data, groups=groups, groups2=groups2, 
-           dids=c(&quot;OD&quot;,&quot;mV/OD&quot;),ylims=list(&quot;mV/OD&quot;=c(0,1e4)),emphasize.mean=T,verb=F)
-</code></pre>
-
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-36" style="background:;">
   <hgroup>
     <h3>Gene Expression: Normalized Fluorescence - FL/OD</h3>
   </hgroup>
@@ -1153,8 +3147,7 @@ Are the fits Ok? How to get more information on the fits?</oq></p>
            ylim=c(0,1e4), g2.legend=FALSE, verb=FALSE)
 </code></pre>
 
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-23-1.png" alt="plot of chunk unnamed-chunk-23"></p>
 
 <p><oq>What could the slope \(\frac{mV}{OD} \sim OD \) (where it&#39;s linear) 
 mean?<br/>Can we use it?</oq></p>
@@ -1163,23 +3156,17 @@ mean?<br/>Can we use it?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-37" style="background:;">
+<slide class="" id="slide-36" style="background:;">
   <hgroup>
     <h3>Gene Expression: Normalized Fluorescence - Interpolate to OD</h3>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">od.data &lt;- interpolatePlateData(data,&quot;OD&quot;)
-</code></pre>
-
-<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">viewGroups(od.data, groups=groups[2], groups2=groups2,xlim=c(.01,.15),
+viewGroups(od.data, groups=groups[2], groups2=groups2,xlim=c(.01,.15),
            ylims=list(&quot;mV/OD&quot;=c(0,1e4)),dids=&quot;mV/OD&quot;, show.ci=F,lwd.orig=0, verb=F)
 </code></pre>
 
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-24-1.png" alt="plot of chunk unnamed-chunk-24"></p>
 
 <p><oq>Can we smooth upstream data to get rid of the noise?</oq></p>
 
@@ -1187,61 +3174,29 @@ mean?<br/>Can we use it?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-38" style="background:;">
+<slide class="" id="slide-37" style="background:;">
   <hgroup>
     <h3>Gene Expression: The Fold Change</h3>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">flod &lt;- getData(od.data,&quot;mV/OD&quot;)
+uninduced &lt;- rowMeans(flod[, groups2[[&quot;pUC18mV_Inj:NA&quot;]]],na.rm=TRUE)
+od.data &lt;- addData(od.data, ID=&quot;mV/OD/uninduced&quot;, dat=flod/uninduced, col=&quot;#AAAA00&quot;)
 </code></pre>
 
-<pre><code>## Error in getData(od.data, &quot;mV/OD&quot;): object &#39;od.data&#39; not found
-</code></pre>
-
-<pre><code class="r">uninduced &lt;- rowMeans(flod[, groups2[[&quot;pUC18mV_Inj:NA&quot;]]],na.rm=TRUE)
-</code></pre>
-
-<pre><code>## Error in is.data.frame(x): object &#39;flod&#39; not found
-</code></pre>
-
-<pre><code class="r">od.data &lt;- addData(od.data, ID=&quot;mV/OD/uninduced&quot;, dat=flod/uninduced, col=&quot;#AAAA00&quot;)
-</code></pre>
-
-<pre><code>## Error in match(x, table, nomatch = 0L): object &#39;od.data&#39; not found
-</code></pre>
-
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-25-1.png" alt="plot of chunk unnamed-chunk-25"></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-39" style="background:;">
+<slide class="" id="slide-38" style="background:;">
   <hgroup>
     <h3>Gene Expression: Data Normalization</h3>
   </hgroup>
   <article data-timings="">
-    <pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
-
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
-
-<pre><code>## Error in data[[ID]]: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code>## Error in is.data.frame(x): object &#39;flod&#39; not found
-</code></pre>
-
-<pre><code>## Error in data$dataIDs: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
-
-<pre><code>## Error in unlist(groups): object &#39;groups&#39; not found
-</code></pre>
+    <p><img src="assets/fig/unnamed-chunk-26-1.png" alt="plot of chunk unnamed-chunk-26">
+<img src="assets/fig/unnamed-chunk-27-1.png" alt="plot of chunk unnamed-chunk-27"></p>
 
 <p><oq>What&#39;s wrong with <code>mV/OD/uninduced</code> vs. <code>time</code> w/o interpolation?</oq></p>
 
@@ -1249,7 +3204,7 @@ mean?<br/>Can we use it?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-40" style="background:;">
+<slide class="" id="slide-39" style="background:;">
   <hgroup>
     <h3>Gene Expression: Data Normalization - Result</h3>
   </hgroup>
@@ -1257,8 +3212,7 @@ mean?<br/>Can we use it?</oq></p>
     <pre><code class="r">results &lt;- boxData(od.data, did=&quot;mV/OD/uninduced&quot;, rng=.08, groups=groups2, type=&quot;bar&quot;)
 </code></pre>
 
-<pre><code>## Error in boxData(od.data, did = &quot;mV/OD/uninduced&quot;, rng = 0.08, groups = groups2, : object &#39;od.data&#39; not found
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-28-1.png" alt="plot of chunk unnamed-chunk-28"></p>
 
 <p>Extracts values in given range; plots by groups, and returns
 values for each well. </p>
@@ -1271,7 +3225,7 @@ a given range directly.<br/>Or try yourself with base R.</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-41" style="background:;">
+<slide class="" id="slide-40" style="background:;">
   <hgroup>
     <h3>Gene Expression: Data Normalization - Result</h3>
   </hgroup>
@@ -1280,7 +3234,13 @@ a given range directly.<br/>Or try yourself with base R.</oq></p>
 head(results)
 </code></pre>
 
-<pre><code>## Error in head(results): object &#39;results&#39; not found
+<pre><code>##   well     group mV/OD/uninduced@0.08038
+## 1   A1 WT_Inj:NA               0.6856046
+## 2   B1 WT_Inj:NA               0.6510172
+## 3   C1 WT_Inj:NA               0.6200460
+## 4   D1 WT_Inj:NA               0.7815149
+## 5   E1 WT_Inj:NA               0.6994579
+## 6   F1 WT_Inj:NA               0.6037127
 </code></pre>
 
 <p><oq>Calculate confidence intervals and error bars yourself.</oq></p>
@@ -1289,47 +3249,18 @@ head(results)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-42" style="background:;">
+<slide class="codefont" id="slide-41" style="background:;">
   <article data-timings="">
     <pre><code class="r">imgtxt &lt;- matrix(results[,1], nrow=7, ncol=12) # MATRIX THAT LOOKS LIKE PLATE
-</code></pre>
-
-<pre><code>## Error in matrix(results[, 1], nrow = 7, ncol = 12): object &#39;results&#39; not found
-</code></pre>
-
-<pre><code class="r">imgdat &lt;- matrix(results[,3], nrow=7, ncol=12)
-</code></pre>
-
-<pre><code>## Error in matrix(results[, 3], nrow = 7, ncol = 12): object &#39;results&#39; not found
-</code></pre>
-
-<pre><code class="r">tmp &lt;- t(apply(imgdat, 2, rev)) # WHAT HAPPENS HERE?
-</code></pre>
-
-<pre><code>## Error in apply(imgdat, 2, rev): object &#39;imgdat&#39; not found
-</code></pre>
-
-<pre><code class="r">par(mai=c(.5,.5,.01,.01))
+imgdat &lt;- matrix(results[,3], nrow=7, ncol=12)
+tmp &lt;- t(apply(imgdat, 2, rev)) # WHAT HAPPENS HERE?
+par(mai=c(.5,.5,.01,.01))
 image(x=1:12, y=1:7, z=log(tmp), axes=FALSE, ylab=NA, xlab=NA)
+text(x=rep(1:12,7), y=rep(7:1,each=12), paste(t(imgtxt),&quot;:\n&quot;,t(round(imgdat,2)))) 
+axis(1,at=1:12); axis(2, at=1:7, labels=toupper(letters[7:1]), las=2)
 </code></pre>
 
-<pre><code>## Error in image.default(x = 1:12, y = 1:7, z = log(tmp), axes = FALSE, : object &#39;tmp&#39; not found
-</code></pre>
-
-<pre><code class="r">text(x=rep(1:12,7), y=rep(7:1,each=12), paste(t(imgtxt),&quot;:\n&quot;,t(round(imgdat,2)))) 
-</code></pre>
-
-<pre><code>## Error in t(imgtxt): object &#39;imgtxt&#39; not found
-</code></pre>
-
-<pre><code class="r">axis(1,at=1:12); axis(2, at=1:7, labels=toupper(letters[7:1]), las=2)
-</code></pre>
-
-<pre><code>## Error in axis(1, at = 1:12): plot.new has not been called yet
-</code></pre>
-
-<pre><code>## Error in axis(2, at = 1:7, labels = toupper(letters[7:1]), las = 2): plot.new has not been called yet
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-30-1.png" alt="plot of chunk unnamed-chunk-30"></p>
 
 <p><oq>In which order does <code>image</code> plot rows and columns of a matrix?</oq><br/> 
 <oq>Can you spot any systematic plate effects?</oq></p>
@@ -1342,7 +3273,7 @@ correspond to the first column in the matrix, bottom up</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-43" style="background:;">
+<slide class="" id="slide-42" style="background:;">
   <hgroup>
     <h3>Gene Expression - Summary</h3>
   </hgroup>
@@ -1371,7 +3302,7 @@ required for a quantitative model?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="centertext" id="slide-44" style="background:;">
+<slide class="centertext" id="slide-43" style="background:;">
   <hgroup>
     <h2>From Wells to Cells</h2>
   </hgroup>
@@ -1403,7 +3334,7 @@ required for a quantitative model?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="centertext" id="slide-45" style="background:;">
+<slide class="centertext" id="slide-44" style="background:;">
   <hgroup>
     <h2>From Wells to Cells</h2>
   </hgroup>
@@ -1431,7 +3362,7 @@ oscillations or multistablity?</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-46" style="background:;">
+<slide class="codefont" id="slide-45" style="background:;">
   <hgroup>
     <h2>From Wells to Cells: Growth</h2>
   </hgroup>
@@ -1465,7 +3396,7 @@ map \(F\) from total culture to intracellular concentration \(f\)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-47" style="background:;">
+<slide class="codefont" id="slide-46" style="background:;">
   <hgroup>
     <h2>From Wells to Cells : Growth</h2>
   </hgroup>
@@ -1490,7 +3421,7 @@ map \(F\) from total culture to intracellular concentration \(f\)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-48" style="background:;">
+<slide class="codefont" id="slide-47" style="background:;">
   <hgroup>
     <h2>From Wells to Cells : Growth</h2>
   </hgroup>
@@ -1524,7 +3455,7 @@ start e.g. at <code>bionumbers</code>.</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-49" style="background:;">
+<slide class="" id="slide-48" style="background:;">
   <article data-timings="">
     <table><thead>
 <tr>
@@ -1604,7 +3535,7 @@ start e.g. at <code>bionumbers</code>.</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-50" style="background:;">
+<slide class="codefont" id="slide-49" style="background:;">
   <hgroup>
     <h2>From Wells to Cells : Riboswitch</h2>
   </hgroup>
@@ -1639,7 +3570,7 @@ start e.g. at <code>bionumbers</code>.</oq></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-51" style="background:;">
+<slide class="" id="slide-50" style="background:;">
   <hgroup>
     <h2>From Wells to Cells : Riboswitch</h2>
   </hgroup>
@@ -1667,7 +3598,7 @@ in your experiments: can you use <code>image</code>? Can <code>R</code> do 3D pl
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-52" style="background:;">
+<slide class="" id="slide-51" style="background:;">
   <hgroup>
     <h3>Model</h3>
   </hgroup>
@@ -1690,7 +3621,7 @@ growth &lt;- function(t, state, parameters) {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-53" style="background:;">
+<slide class="" id="slide-52" style="background:;">
   <hgroup>
     <h3>Solve</h3>
   </hgroup>
@@ -1713,7 +3644,7 @@ plot(out)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-54" style="background:;">
+<slide class="" id="slide-53" style="background:;">
   <hgroup>
     <h3>Vary Parameters &amp; Initial Conditions</h3>
   </hgroup>
@@ -1736,7 +3667,7 @@ plot(out)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont" id="slide-55" style="background:;">
+<slide class="codefont" id="slide-54" style="background:;">
   <hgroup>
     <h3>Vary Parameters &amp; Initial Conditions</h3>
   </hgroup>
@@ -1759,7 +3690,7 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-56" style="background:;">
+<slide class="" id="slide-55" style="background:;">
   <hgroup>
     <h3>Fit To Data</h3>
   </hgroup>
@@ -1767,12 +3698,6 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     <p><a href="https://www.r-bloggers.com/learning-r-parameter-fitting-for-models-involving-differential-equations/">https://www.r-bloggers.com/learning-r-parameter-fitting-for-models-involving-differential-equations/</a></p>
 
 <pre><code class="r">library(FME)
-</code></pre>
-
-<pre><code>## Loading required package: rootSolve
-</code></pre>
-
-<pre><code>## Loading required package: coda
 </code></pre>
 
   </article>
@@ -1791,19 +3716,19 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='NA'>
+        data-slide=2 title='What is R?'>
          2
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='From Data Hell to Model Heaven : Why Platereader?'>
+        data-slide=3 title='NA'>
          3
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='From Data Hell to Model Heaven and back.'>
+        data-slide=4 title='The Data Pipeline.'>
          4
       </a>
     </li>
@@ -1827,25 +3752,25 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Why Growth Rates?'>
+        data-slide=8 title='Why Growth Rates? The Copenhagen School'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Why Growth Rates?'>
+        data-slide=9 title='Large groups of transcripts correlate with \(\mu\)'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='NA'>
+        data-slide=10 title='... but also vary during exponential growth'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Cited at Wikipedia:'>
+        data-slide=11 title='DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).'>
          11
       </a>
     </li>
@@ -1857,37 +3782,37 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='DNA Supercoiling Varies during Exponential Phase (constant \(\mu\)).'>
+        data-slide=13 title='Growth &amp; Gene Expression in <em>E. coli</em> : exponential growth'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Growth &amp; Gene Expression in <em>E. coli</em> : exponential growth'>
+        data-slide=14 title='Growth &amp; Gene Expression in <em>E. coli</em> : growth rate'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Growth &amp; Gene Expression in <em>E. coli</em> : growth rate'>
+        data-slide=15 title='Growth &amp; Gene Expression in <em>E. coli</em> : doubling time'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Growth &amp; Gene Expression in <em>E. coli</em> : doubling time'>
+        data-slide=16 title='Growth &amp; Gene Expression in <em>E. coli</em> : growth rate'>
          16
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Growth &amp; Gene Expression in <em>E. coli</em> : growth rate'>
+        data-slide=17 title='Load Your Data'>
          17
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Load Your Data'>
+        data-slide=18 title='NA'>
          18
       </a>
     </li>
@@ -1899,13 +3824,13 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='NA'>
+        data-slide=20 title='Linear and Non-linear Regression: analyzing a single data set'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Linear and Non-linear Regression: analyzing a single data set'>
+        data-slide=21 title='NA'>
          21
       </a>
     </li>
@@ -1941,25 +3866,25 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=27 title='NA'>
+        data-slide=27 title='Fitting Growth Models'>
          27
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=28 title='Fitting Growth Models'>
+        data-slide=28 title='Prepare Data: blanks, cuts, etc.'>
          28
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=29 title='Prepare Data: blanks, cuts, etc.'>
+        data-slide=29 title='Get Replicate Groups'>
          29
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=30 title='Get Replicate Groups'>
+        data-slide=30 title='Use Package <code>grofit</code> to Fit Growth Data'>
          30
       </a>
     </li>
@@ -1971,49 +3896,49 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=32 title='Use Package <code>grofit</code> to Fit Growth Data'>
+        data-slide=32 title='NA'>
          32
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=33 title='NA'>
+        data-slide=33 title='Gene Expression: Normalized Fluorescence - FL/OD'>
          33
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=34 title='Gene Expression: Normalized Fluorescence - FL/OD'>
+        data-slide=34 title='Gene Expression: Normalized Fluorescence  - FL/OD'>
          34
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=35 title='Gene Expression: Normalized Fluorescence  - FL/OD'>
+        data-slide=35 title='Gene Expression: Normalized Fluorescence - FL/OD'>
          35
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=36 title='Gene Expression: Normalized Fluorescence - FL/OD'>
+        data-slide=36 title='Gene Expression: Normalized Fluorescence - Interpolate to OD'>
          36
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=37 title='Gene Expression: Normalized Fluorescence - Interpolate to OD'>
+        data-slide=37 title='Gene Expression: The Fold Change'>
          37
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=38 title='Gene Expression: The Fold Change'>
+        data-slide=38 title='Gene Expression: Data Normalization'>
          38
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=39 title='Gene Expression: Data Normalization'>
+        data-slide=39 title='Gene Expression: Data Normalization - Result'>
          39
       </a>
     </li>
@@ -2025,19 +3950,19 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=41 title='Gene Expression: Data Normalization - Result'>
+        data-slide=41 title='NA'>
          41
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=42 title='NA'>
+        data-slide=42 title='Gene Expression - Summary'>
          42
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=43 title='Gene Expression - Summary'>
+        data-slide=43 title='From Wells to Cells'>
          43
       </a>
     </li>
@@ -2049,13 +3974,13 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=45 title='From Wells to Cells'>
+        data-slide=45 title='From Wells to Cells: Growth'>
          45
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=46 title='From Wells to Cells: Growth'>
+        data-slide=46 title='From Wells to Cells : Growth'>
          46
       </a>
     </li>
@@ -2067,13 +3992,13 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=48 title='From Wells to Cells : Growth'>
+        data-slide=48 title='NA'>
          48
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=49 title='NA'>
+        data-slide=49 title='From Wells to Cells : Riboswitch'>
          49
       </a>
     </li>
@@ -2085,19 +4010,19 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=51 title='From Wells to Cells : Riboswitch'>
+        data-slide=51 title='Model'>
          51
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=52 title='Model'>
+        data-slide=52 title='Solve'>
          52
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=53 title='Solve'>
+        data-slide=53 title='Vary Parameters &amp; Initial Conditions'>
          53
       </a>
     </li>
@@ -2109,14 +4034,8 @@ legend(&quot;topleft&quot;,paste(&quot;S&quot;,seq(0.1,10,1)),col=1:nrow(X),lty=
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=55 title='Vary Parameters &amp; Initial Conditions'>
+        data-slide=55 title='Fit To Data'>
          55
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=56 title='Fit To Data'>
-         56
       </a>
     </li>
   </ul>

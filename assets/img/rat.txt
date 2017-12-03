@@ -1,0 +1,5 @@
+url: https://www.biologycorner.com/resources/rat_dissection.gif
+url  https://www.biologycorner.com/resources/rat_colon 
+url:  https://www.biologycorner.com/resources/rat_incisions_sm.gif
+via: https://www.biologycorner.com/worksheets/rat_head.html
+topic: Rat Anatomy

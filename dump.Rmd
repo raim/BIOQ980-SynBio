@@ -1,0 +1,52 @@
+---
+## Why Platereader?
+
+### Shakeflask vs. Platereader Cultures
+
+1. Data Analysis
+    * many replicates, many conditions
+	* different statistics required
+2. Endpoint vs. Kinetics
+    * steady-state vs. dynamics
+
+<oq>Are tube and platereader cultures comparable?</oq><br/>
+<oq>Why Timeseries?</oq><br/>
+<oq>Why (not)?</oq>
+
+---
+<b>Koch, Can J Microbiol 1988: <em>Why can't a cell grow infinitely fast?</em></b></br>
+Neidhardt, J Bacteriol 1999: <em>Bacterial growth: constant obsession with dN/dt.</em>
+
+---&twocolbigright
+
+
+***=left
+
+<img src="assets/img/scott14_fig1b.png" height="220">
+
+<img src="assets/img/scott14_fig4.png" height="220">
+
+Scott *et al.*, Mol Syst Biol 2014: *Emergence of robust growth laws from optimal regulation of ribosome synthesis.*
+
+***=right
+<img src="assets/img/cluster_vs_rates_major.png" height="200"><br/>
+<oq>Expression of large gene groups correlates with \(\mu\).</oq>
+
+<img src="assets/img/slavov14_selected_transcripts.png" height="200"><br/>
+<oq>Even at constant \(\mu\) cells are not 
+in steady-state!</oq>
+
+Slavov *et al.*, Cell Rep 2014: *Constant growth rate can be supported by decreasing energy flux and increasing aerobic glycolysis.*<br/>
+
+The concept of "balanced growth" is flawed, yet a central assumption
+of many quantitative models.
+
+---
+### Cited at Wikipedia:
+
+<img src="assets/img/expogrowth_wiki_slavovcit.png" width="900">
+
+
+. . . that's how important it is (or perhaps it was his dad :p ).</br>
+
+[1] Slavov *et al.*, Cell Rep 2014: *Constant growth rate can be supported by<br/>decreasing energy flux and increasing aerobic glycolysis.*<br/>
