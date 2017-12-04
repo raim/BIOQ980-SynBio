@@ -46,7 +46,7 @@ gain better quantitative understanding of cell growth <em>VS.</em> gene regulati
 
 * a Domain-Specific Language (DSL) for statistics and graphics
 * written in `C`, the package `Rcpp` provides `C++` interface
-* modern interfaces: `ggplot`, `tidyverse`, etc.
+* modern interfaces: `ggplot`, `tidyverse`, `knitr`, etc.
 * especially apt for exploratory data analysis, and publication
   quality plots
 
