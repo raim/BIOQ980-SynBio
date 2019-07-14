@@ -3,7 +3,7 @@ library(slidify)
 ## INIT:
 ## author("cellgrowth_20161214")
 
-setwd("~/work/hhu_2015/uebung_201712/slides")
+setwd("~/work/hhu_talks/uebung_201712/BIOQ980-SynBio")
 slidify("index.Rmd")
 
 ## to GIT
